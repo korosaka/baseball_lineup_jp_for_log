@@ -4,12 +4,12 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical">
-
     <ScrollView
         android:id="@+id/scroll"
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        android:layout_weight="1.0">
+        android:layout_weight="1.0"
+        android:layout_marginBottom="5dp">
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -59,7 +59,7 @@
                 android:id="@+id/record"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginBottom="5dp"
+                android:layout_marginBottom="20dp"
                 android:enabled="false"
                 android:onClick="onClickSave"
                 android:text="@string/save"
@@ -376,7 +376,8 @@
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:orientation="horizontal">
+                android:orientation="horizontal"
+                android:layout_marginBottom="35dp">
 
                 <Button
                     android:id="@+id/btn9"
@@ -411,5 +412,14 @@
             </LinearLayout>
         </LinearLayout>
     </ScrollView>
+    <com.google.android.gms.ads.AdView
+        xmlns:ads="http://schemas.android.com/apk/res-auto"
+        android:id="@+id/adView"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        ads:adSize="BANNER"
+        ads:adUnitId="ca-app-pub-3940256099942544/6300978111">
+    </com.google.android.gms.ads.AdView>
+
 
 </LinearLayout>
