@@ -21,6 +21,7 @@ import com.google.android.gms.ads.AdView;
 import com.google.android.gms.ads.MobileAds;
 
 public class MainActivity extends AppCompatActivity {
+    //広告ビュー
     private AdView mAdView;
     //選択した打順
     TextView tvSelectNum;
