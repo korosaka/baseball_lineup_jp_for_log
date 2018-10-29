@@ -1,5 +1,6 @@
 package com.websarva.wings.android.dasenapp;
 
+import android.content.Intent;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteStatement;
@@ -381,6 +382,11 @@ public class MainActivity extends AppCompatActivity {
             case R.id.subOder:
                 //データベース上の打順が11〜19番を対象に
                 k = 10;
+                break;
+            case R.id.field:
+                //フィールド画面へ
+                Intent intent = new Intent(MainActivity.this,FieldActivity.class);
+                startActivity(intent);
                 break;
         }
 
