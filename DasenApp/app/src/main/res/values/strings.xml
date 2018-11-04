@@ -30,4 +30,5 @@
     <string name="order">オーダー</string>
     <string name="subOrder">サブオーダー</string>
     <string name="field">フィールド表示</string>
+    <string name="back">戻る</string>
 </resources>

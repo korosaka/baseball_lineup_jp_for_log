@@ -63,31 +63,31 @@ public class FieldActivity extends AppCompatActivity {
         for(int i = 0;i < 9;i++){
             switch (positions[i]){
                 case "(投)":
-                    position1.setText(names[i]);
+                    position1.setText(names[i] + " (" + (i + 1) + ")");
                     break;
                 case "(捕)":
-                    position2.setText(names[i]);
+                    position2.setText(names[i] + " (" + (i + 1) + ")");
                     break;
                 case "(一)":
-                    position3.setText(names[i]);
+                    position3.setText(names[i] + " (" + (i + 1) + ")");
                     break;
                 case "(二)":
-                    position4.setText(names[i]);
+                    position4.setText(names[i] + " (" + (i + 1) + ")");
                     break;
                 case "(三)":
-                    position5.setText(names[i]);
+                    position5.setText(names[i] + " (" + (i + 1) + ")");
                     break;
                 case "(遊)":
-                    position6.setText(names[i]);
+                    position6.setText(names[i] + " (" + (i + 1) + ")");
                     break;
                 case "(左)":
-                    position7.setText(names[i]);
+                    position7.setText(names[i] + " (" + (i + 1) + ")");
                     break;
                 case "(中)":
-                    position8.setText(names[i]);
+                    position8.setText(names[i] + " (" + (i + 1) + ")");
                     break;
                 case "(右)":
-                    position9.setText(names[i]);
+                    position9.setText(names[i] + " (" + (i + 1) + ")");
                     break;
                 default:
                     break;
@@ -96,6 +96,7 @@ public class FieldActivity extends AppCompatActivity {
 
 
     }
+    //戻るボタン
     public void onClickBack(View view){
         finish();
     }
