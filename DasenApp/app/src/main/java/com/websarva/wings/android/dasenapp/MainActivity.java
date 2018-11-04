@@ -76,6 +76,7 @@ public class MainActivity extends AppCompatActivity {
         mAdView = findViewById(R.id.adView);
         AdRequest adRequest = new AdRequest.Builder().build();
         mAdView.loadAd(adRequest);
+
         //上記のグローバルフィールド紐付け
         tvSelectNum = findViewById(R.id.selectNum);
         etName = findViewById(R.id.etName);
@@ -384,8 +385,18 @@ public class MainActivity extends AppCompatActivity {
                 k = 10;
                 break;
             case R.id.field:
+                //遷移先に送るデータ（各守備位置・名前）
+                String[] positionIntent = new String[9];
+                String[] nameIntent = new String[9];
+                //送るデータ（9人分）を抽出（正規orサブ）
+                for (int i = 0;i < 9;i++){
+                    positionIntent[i] = positions[i + k];
+                    nameIntent[i] = names[i + k];
+                }
                 //フィールド画面へ
                 Intent intent = new Intent(MainActivity.this,FieldActivity.class);
+                intent.putExtra("positions",positionIntent);
+                intent.putExtra("names",nameIntent);
                 startActivity(intent);
                 break;
         }
