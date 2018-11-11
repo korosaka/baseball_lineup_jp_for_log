@@ -75,7 +75,13 @@
                 android:text="@string/title"
                 android:textColor="@android:color/holo_blue_light"
                 android:textSize="18sp"
-                android:textStyle="bold" />
+                android:textStyle="bold"
+                android:focusable="true"
+                android:focusableInTouchMode="true">
+                <requestFocus />
+
+            </TextView>
+
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -418,7 +424,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         ads:adSize="BANNER"
-        ads:adUnitId="ca-app-pub-3940256099942544/6300978111">
+        ads:adUnitId="ca-app-pub-6298264304843789/6273376185">
     </com.google.android.gms.ads.AdView>
 
 
