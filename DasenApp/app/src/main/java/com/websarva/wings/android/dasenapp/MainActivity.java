@@ -1,5 +1,6 @@
 package com.websarva.wings.android.dasenapp;
 
+import android.content.Context;
 import android.content.Intent;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
@@ -11,6 +12,7 @@ import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Spinner;
@@ -108,7 +110,26 @@ public class MainActivity extends AppCompatActivity {
         //スピナー紐付け
         spinner = findViewById(R.id.position);
         //EditText入力不可に
+        etName.setFocusable(false);
+        etName.setFocusableInTouchMode(false);
         etName.setEnabled(false);
+        etName.setOnFocusChangeListener(new View.OnFocusChangeListener(){
+            @Override
+            public void onFocusChange(View view,boolean flag){
+//                フォーカスを取得→キーボード表示
+                if(flag){
+                    InputMethodManager imm = (InputMethodManager)getSystemService(Context.INPUT_METHOD_SERVICE);
+                    imm.showSoftInput(view,0);
+                }
+//                フォーカス外れる→キーボード非表示
+                else {
+                    InputMethodManager imm = (InputMethodManager)getSystemService(Context.INPUT_METHOD_SERVICE);
+                    imm.hideSoftInputFromWindow(view.getWindowToken(),0);
+
+                }
+
+            }
+        });
 
         //データベースからデータを取り出してきて表示する処理
         //データベースヘルパーオブジェクト生成
@@ -221,7 +242,7 @@ public class MainActivity extends AppCompatActivity {
         etName.setEnabled(true);
         etName.setFocusable(true);
         etName.setFocusableInTouchMode(true);
-//        etName.requestFocus();
+        etName.requestFocus();
         record.setEnabled(true);
         clear.setEnabled(true);
         i = j;
@@ -289,6 +310,8 @@ public class MainActivity extends AppCompatActivity {
         tvSelectNum.setText(getString(R.string.current_num));
         etName.setText("");
         spinner.setSelection(0);
+        etName.setFocusable(false);
+        etName.setFocusableInTouchMode(false);
         etName.setEnabled(false);
         record.setEnabled(false);
         clear.setEnabled(false);
@@ -467,6 +490,8 @@ public class MainActivity extends AppCompatActivity {
         tvSelectNum.setText(getString(R.string.current_num));
         etName.setText("");
         spinner.setSelection(0);
+        etName.setFocusable(false);
+        etName.setFocusableInTouchMode(false);
         etName.setEnabled(false);
         record.setEnabled(false);
         clear.setEnabled(false);
@@ -474,14 +499,14 @@ public class MainActivity extends AppCompatActivity {
         return super.onOptionsItemSelected(item);
     }
 
-    @Override
-    public void onResume(){
-        super.onResume();
-
-        etName.setFocusable(false);
-        etName.setFocusableInTouchMode(false);
-    }
-
+//    @Override
+//    public void onResume(){
+//        super.onResume();
+//
+//        etName.setFocusable(false);
+//        etName.setFocusableInTouchMode(false);
+//    }
+//
 //    @Override
 //    public void onRestart(){
 //        super.onRestart();
