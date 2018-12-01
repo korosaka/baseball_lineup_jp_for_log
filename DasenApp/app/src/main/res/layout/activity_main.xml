@@ -98,12 +98,12 @@
                     android:id="@+id/position1"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginLeft="20dp"
-                    android:layout_marginRight="20dp"
+                    android:layout_marginLeft="15dp"
+                    android:layout_marginRight="15dp"
                     android:layout_marginTop="5dp"
                     android:text="@string/position"
                     android:textColor="@android:color/holo_green_dark"
-                    android:textSize="30sp"
+                    android:textSize="28sp"
                     android:textStyle="bold" />
 
                 <TextView
@@ -114,7 +114,7 @@
                     android:layout_marginTop="5dp"
                     android:text="@string/unselected"
                     android:textColor="@color/colorPrimaryDark"
-                    android:textSize="30sp"
+                    android:textSize="28sp"
                     android:textStyle="bold" />
             </LinearLayout>
 
@@ -135,12 +135,12 @@
                     android:id="@+id/position2"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginLeft="20dp"
-                    android:layout_marginRight="20dp"
+                    android:layout_marginLeft="15dp"
+                    android:layout_marginRight="15dp"
                     android:layout_marginTop="5dp"
                     android:text="@string/position"
                     android:textColor="@android:color/holo_green_dark"
-                    android:textSize="30sp"
+                    android:textSize="28sp"
                     android:textStyle="bold" />
 
                 <TextView
@@ -151,7 +151,7 @@
                     android:layout_marginTop="5dp"
                     android:text="@string/unselected"
                     android:textColor="@color/colorPrimaryDark"
-                    android:textSize="30sp"
+                    android:textSize="28sp"
                     android:textStyle="bold" />
             </LinearLayout>
 
@@ -172,12 +172,12 @@
                     android:id="@+id/position3"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginLeft="20dp"
-                    android:layout_marginRight="20dp"
+                    android:layout_marginLeft="15dp"
+                    android:layout_marginRight="15dp"
                     android:layout_marginTop="5dp"
                     android:text="@string/position"
                     android:textColor="@android:color/holo_green_dark"
-                    android:textSize="30sp"
+                    android:textSize="28sp"
                     android:textStyle="bold" />
 
                 <TextView
@@ -188,7 +188,7 @@
                     android:layout_marginTop="5dp"
                     android:text="@string/unselected"
                     android:textColor="@color/colorPrimaryDark"
-                    android:textSize="30sp"
+                    android:textSize="28sp"
                     android:textStyle="bold" />
             </LinearLayout>
 
@@ -209,12 +209,12 @@
                     android:id="@+id/position4"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginLeft="20dp"
-                    android:layout_marginRight="20dp"
+                    android:layout_marginLeft="15dp"
+                    android:layout_marginRight="15dp"
                     android:layout_marginTop="5dp"
                     android:text="@string/position"
                     android:textColor="@android:color/holo_green_dark"
-                    android:textSize="30sp"
+                    android:textSize="28sp"
                     android:textStyle="bold" />
 
                 <TextView
@@ -225,7 +225,7 @@
                     android:layout_marginTop="5dp"
                     android:text="@string/unselected"
                     android:textColor="@color/colorPrimaryDark"
-                    android:textSize="30sp"
+                    android:textSize="28sp"
                     android:textStyle="bold" />
             </LinearLayout>
 
@@ -246,12 +246,12 @@
                     android:id="@+id/position5"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginLeft="20dp"
-                    android:layout_marginRight="20dp"
+                    android:layout_marginLeft="15dp"
+                    android:layout_marginRight="15dp"
                     android:layout_marginTop="5dp"
                     android:text="@string/position"
                     android:textColor="@android:color/holo_green_dark"
-                    android:textSize="30sp"
+                    android:textSize="28sp"
                     android:textStyle="bold" />
 
                 <TextView
@@ -262,7 +262,7 @@
                     android:layout_marginTop="5dp"
                     android:text="@string/unselected"
                     android:textColor="@color/colorPrimaryDark"
-                    android:textSize="30sp"
+                    android:textSize="28sp"
                     android:textStyle="bold" />
             </LinearLayout>
 
@@ -283,12 +283,12 @@
                     android:id="@+id/position6"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginLeft="20dp"
-                    android:layout_marginRight="20dp"
+                    android:layout_marginLeft="15dp"
+                    android:layout_marginRight="15dp"
                     android:layout_marginTop="5dp"
                     android:text="@string/position"
                     android:textColor="@android:color/holo_green_dark"
-                    android:textSize="30sp"
+                    android:textSize="28sp"
                     android:textStyle="bold" />
 
                 <TextView
@@ -299,7 +299,7 @@
                     android:layout_marginTop="5dp"
                     android:text="@string/unselected"
                     android:textColor="@color/colorPrimaryDark"
-                    android:textSize="30sp"
+                    android:textSize="28sp"
                     android:textStyle="bold" />
             </LinearLayout>
 
@@ -320,12 +320,12 @@
                     android:id="@+id/position7"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginLeft="20dp"
-                    android:layout_marginRight="20dp"
+                    android:layout_marginLeft="15dp"
+                    android:layout_marginRight="15dp"
                     android:layout_marginTop="5dp"
                     android:text="@string/position"
                     android:textColor="@android:color/holo_green_dark"
-                    android:textSize="30sp"
+                    android:textSize="28sp"
                     android:textStyle="bold" />
 
                 <TextView
@@ -336,7 +336,7 @@
                     android:layout_marginTop="5dp"
                     android:text="@string/unselected"
                     android:textColor="@color/colorPrimaryDark"
-                    android:textSize="30sp"
+                    android:textSize="28sp"
                     android:textStyle="bold" />
             </LinearLayout>
 
@@ -357,12 +357,12 @@
                     android:id="@+id/position8"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginLeft="20dp"
-                    android:layout_marginRight="20dp"
+                    android:layout_marginLeft="15dp"
+                    android:layout_marginRight="15dp"
                     android:layout_marginTop="5dp"
                     android:text="@string/position"
                     android:textColor="@android:color/holo_green_dark"
-                    android:textSize="30sp"
+                    android:textSize="28sp"
                     android:textStyle="bold" />
 
                 <TextView
@@ -373,7 +373,7 @@
                     android:layout_marginTop="5dp"
                     android:text="@string/unselected"
                     android:textColor="@color/colorPrimaryDark"
-                    android:textSize="30sp"
+                    android:textSize="28sp"
                     android:textStyle="bold" />
             </LinearLayout>
 
@@ -395,12 +395,12 @@
                     android:id="@+id/position9"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginLeft="20dp"
-                    android:layout_marginRight="20dp"
+                    android:layout_marginLeft="15dp"
+                    android:layout_marginRight="15dp"
                     android:layout_marginTop="5dp"
                     android:text="@string/position"
                     android:textColor="@android:color/holo_green_dark"
-                    android:textSize="30sp"
+                    android:textSize="28sp"
                     android:textStyle="bold" />
 
                 <TextView
@@ -411,7 +411,7 @@
                     android:layout_marginTop="5dp"
                     android:text="@string/unselected"
                     android:textColor="@color/colorPrimaryDark"
-                    android:textSize="30sp"
+                    android:textSize="28sp"
                     android:textStyle="bold" />
             </LinearLayout>
         </LinearLayout>
