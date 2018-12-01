@@ -27,7 +27,7 @@ public class MainActivity extends AppCompatActivity {
     //選択した打順
     TextView tvSelectNum;
     //入力欄
-    EditText etName;
+    public EditText etName;
     //登録ボタン
     Button record;
     //スタメンタイトル
@@ -219,6 +219,9 @@ public class MainActivity extends AppCompatActivity {
             etName.setText("");
         }
         etName.setEnabled(true);
+        etName.setFocusable(true);
+        etName.setFocusableInTouchMode(true);
+//        etName.requestFocus();
         record.setEnabled(true);
         clear.setEnabled(true);
         i = j;
@@ -470,4 +473,20 @@ public class MainActivity extends AppCompatActivity {
         //親クラス同名メソッドで戻り値返却
         return super.onOptionsItemSelected(item);
     }
+
+    @Override
+    public void onResume(){
+        super.onResume();
+
+        etName.setFocusable(false);
+        etName.setFocusableInTouchMode(false);
+    }
+
+//    @Override
+//    public void onRestart(){
+//        super.onRestart();
+//
+//        etName.setFocusable(false);
+//        etName.setFocusableInTouchMode(false);
+//    }
 }
