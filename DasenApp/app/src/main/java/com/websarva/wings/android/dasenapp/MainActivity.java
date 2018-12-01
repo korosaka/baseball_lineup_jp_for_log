@@ -125,9 +125,7 @@ public class MainActivity extends AppCompatActivity {
                 else {
                     InputMethodManager imm = (InputMethodManager)getSystemService(Context.INPUT_METHOD_SERVICE);
                     imm.hideSoftInputFromWindow(view.getWindowToken(),0);
-
                 }
-
             }
         });
 
@@ -499,19 +497,4 @@ public class MainActivity extends AppCompatActivity {
         return super.onOptionsItemSelected(item);
     }
 
-//    @Override
-//    public void onResume(){
-//        super.onResume();
-//
-//        etName.setFocusable(false);
-//        etName.setFocusableInTouchMode(false);
-//    }
-//
-//    @Override
-//    public void onRestart(){
-//        super.onRestart();
-//
-//        etName.setFocusable(false);
-//        etName.setFocusableInTouchMode(false);
-//    }
 }
