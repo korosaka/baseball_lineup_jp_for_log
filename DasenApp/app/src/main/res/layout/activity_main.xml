@@ -55,16 +55,36 @@
                     android:text="@string/clear" />
             </LinearLayout>
 
-            <Button
-                android:id="@+id/record"
+            <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginBottom="20dp"
-                android:enabled="false"
-                android:onClick="onClickSave"
-                android:text="@string/save"
-                android:textSize="18sp"
-                android:textStyle="bold" />
+                android:orientation="horizontal">
+
+                <Button
+                    android:id="@+id/cancel"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="15dp"
+                    android:enabled="false"
+                    android:onClick="onClickCancel"
+                    android:text="@string/cancel"
+                    android:textSize="14sp" />
+
+                <Button
+                    android:id="@+id/record"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1.0"
+                    android:layout_marginBottom="15dp"
+                    android:enabled="false"
+                    android:onClick="onClickSave"
+                    android:text="@string/save"
+                    android:textSize="18sp"
+                    android:textStyle="bold" />
+
+
+
+            </LinearLayout>
 
             <TextView
                 android:id="@+id/title"
@@ -121,7 +141,8 @@
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:orientation="horizontal">
+                android:orientation="horizontal"
+                android:layout_marginTop="-5sp">
 
                 <Button
                     android:id="@+id/btn2"
@@ -158,7 +179,8 @@
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:orientation="horizontal">
+                android:orientation="horizontal"
+                android:layout_marginTop="-5sp">
 
                 <Button
                     android:id="@+id/btn3"
@@ -195,7 +217,8 @@
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:orientation="horizontal">
+                android:orientation="horizontal"
+                android:layout_marginTop="-5sp">
 
                 <Button
                     android:id="@+id/btn4"
@@ -232,9 +255,11 @@
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:orientation="horizontal">
+                android:orientation="horizontal"
+                android:layout_marginTop="-5sp">
 
-                <Button
+
+            <Button
                     android:id="@+id/btn5"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
@@ -269,9 +294,11 @@
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:orientation="horizontal">
+                android:orientation="horizontal"
+                android:layout_marginTop="-5sp">
 
-                <Button
+
+            <Button
                     android:id="@+id/btn6"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
@@ -306,9 +333,11 @@
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:orientation="horizontal">
+                android:orientation="horizontal"
+                android:layout_marginTop="-5sp">
 
-                <Button
+
+            <Button
                     android:id="@+id/btn7"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
@@ -343,9 +372,11 @@
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:orientation="horizontal">
+                android:orientation="horizontal"
+                android:layout_marginTop="-5sp">
 
-                <Button
+
+            <Button
                     android:id="@+id/btn8"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
@@ -381,9 +412,11 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="horizontal"
-                android:layout_marginBottom="35dp">
+                android:layout_marginBottom="30dp"
+                android:layout_marginTop="-5sp">
 
-                <Button
+
+            <Button
                     android:id="@+id/btn9"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
@@ -422,7 +455,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         ads:adSize="BANNER"
-        ads:adUnitId="ca-app-pub-6298264304843789/6273376185">
+        ads:adUnitId="ca-app-pub-3940256099942544/6300978111">
     </com.google.android.gms.ads.AdView>
 
 

@@ -31,4 +31,5 @@
     <string name="subOrder">サブオーダー</string>
     <string name="field">フィールド表示</string>
     <string name="back">戻る</string>
+    <string name="cancel">キャンセル</string>
 </resources>
