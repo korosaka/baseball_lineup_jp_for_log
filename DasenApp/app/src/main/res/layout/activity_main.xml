@@ -68,13 +68,14 @@
                     android:enabled="false"
                     android:onClick="onClickCancel"
                     android:text="@string/cancel"
-                    android:textSize="14sp" />
+                    android:textSize="18sp"
+                    android:textStyle="bold" />
 
                 <Button
                     android:id="@+id/record"
-                    android:layout_width="0dp"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_weight="1.0"
+                    android:layout_marginLeft="10dp"
                     android:layout_marginBottom="15dp"
                     android:enabled="false"
                     android:onClick="onClickSave"
