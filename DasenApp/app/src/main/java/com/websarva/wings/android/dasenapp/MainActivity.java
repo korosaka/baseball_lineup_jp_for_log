@@ -32,6 +32,8 @@ public class MainActivity extends AppCompatActivity {
     public EditText etName;
     //登録ボタン
     Button record;
+//    キャンセルボタン
+    Button cancel;
     //スタメンタイトル
     TextView title;
     //各打順の数字配列
@@ -83,6 +85,7 @@ public class MainActivity extends AppCompatActivity {
         tvSelectNum = findViewById(R.id.selectNum);
         etName = findViewById(R.id.etName);
         record = findViewById(R.id.record);
+        cancel = findViewById(R.id.cancel);
         clear = findViewById(R.id.clear);
         title = findViewById(R.id.title);
         name1 = findViewById(R.id.name1);
@@ -242,6 +245,7 @@ public class MainActivity extends AppCompatActivity {
         etName.setFocusableInTouchMode(true);
         etName.requestFocus();
         record.setEnabled(true);
+        cancel.setEnabled(true);
         clear.setEnabled(true);
         i = j;
     }
@@ -312,6 +316,7 @@ public class MainActivity extends AppCompatActivity {
         etName.setFocusableInTouchMode(false);
         etName.setEnabled(false);
         record.setEnabled(false);
+        cancel.setEnabled(false);
         clear.setEnabled(false);
 
         //画面のメンバー表に反映（１〜９番まで）
@@ -373,13 +378,31 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
-    //キャンセルボタン処理
+    //クリアボタン処理
     public void onClickClear(View view){
         //入力名をクリア状態に
         etName.setText("");
         //スピナー（守備位置）を未選択状態に戻す
         spinner.setSelection(0);
     }
+
+//    キャンセルボタン処理
+    public void onClickCancel(View view){
+
+
+        //それぞれ初期状態に戻す
+        tvSelectNum.setText(getString(R.string.current_num));
+        etName.setText("");
+        spinner.setSelection(0);
+        etName.setFocusable(false);
+        etName.setFocusableInTouchMode(false);
+        etName.setEnabled(false);
+        record.setEnabled(false);
+        cancel.setEnabled(false);
+        clear.setEnabled(false);
+
+    }
+
 
     //オプションメニュー追加
     @Override
@@ -492,6 +515,7 @@ public class MainActivity extends AppCompatActivity {
         etName.setFocusableInTouchMode(false);
         etName.setEnabled(false);
         record.setEnabled(false);
+        cancel.setEnabled(false);
         clear.setEnabled(false);
         //親クラス同名メソッドで戻り値返却
         return super.onOptionsItemSelected(item);
