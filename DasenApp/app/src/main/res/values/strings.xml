@@ -32,4 +32,6 @@
     <string name="field">フィールド表示</string>
     <string name="back">戻る</string>
     <string name="cancel">キャンセル</string>
+    <string name="replace">入れ替え</string>
+    <string name="replace_title">入れ替える２つの打順を選んでください</string>
 </resources>

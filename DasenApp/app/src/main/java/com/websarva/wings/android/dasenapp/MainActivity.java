@@ -34,6 +34,13 @@ public class MainActivity extends AppCompatActivity {
     Button record;
 //    キャンセルボタン
     Button cancel;
+    // 入れ替えボタン
+    Button replace;
+    // 入れ替え中フラグ
+    Boolean isReplacing;
+    // １つ目２つ目入れ替え選択フラグ
+    Boolean isFirstReplaceClicked;
+    Boolean isSecondReplaceClicked;
     //スタメンタイトル
     TextView title;
     //各打順の数字配列
@@ -86,6 +93,7 @@ public class MainActivity extends AppCompatActivity {
         etName = findViewById(R.id.etName);
         record = findViewById(R.id.record);
         cancel = findViewById(R.id.cancel);
+        replace = findViewById(R.id.replace);
         clear = findViewById(R.id.clear);
         title = findViewById(R.id.title);
         name1 = findViewById(R.id.name1);
@@ -247,6 +255,7 @@ public class MainActivity extends AppCompatActivity {
         record.setEnabled(true);
         cancel.setEnabled(true);
         clear.setEnabled(true);
+        replace.setEnabled(false);
         i = j;
     }
     //文字列からスピナーをセットするメソッド（上記メソッドで使用）
@@ -318,6 +327,7 @@ public class MainActivity extends AppCompatActivity {
         record.setEnabled(false);
         cancel.setEnabled(false);
         clear.setEnabled(false);
+        replace.setEnabled(true);
 
         //画面のメンバー表に反映（１〜９番まで）
         switch (i){
@@ -389,18 +399,64 @@ public class MainActivity extends AppCompatActivity {
 //    キャンセルボタン処理
     public void onClickCancel(View view){
 
+        // 入れ替えボタンクリック時のキャンセルor入力中のキャンセル？
+        if(isReplacing){
+            //打順ボタン色戻し
+            //入れ替えボタン戻し
+            //入れ替えフラグ戻し
+        }else {
+            //それぞれ初期状態に戻す
+            tvSelectNum.setText(getString(R.string.current_num));
+            etName.setText("");
+            spinner.setSelection(0);
+            etName.setFocusable(false);
+            etName.setFocusableInTouchMode(false);
+            etName.setEnabled(false);
+            record.setEnabled(false);
+            cancel.setEnabled(false);
+            clear.setEnabled(false);
+        }
 
-        //それぞれ初期状態に戻す
-        tvSelectNum.setText(getString(R.string.current_num));
-        etName.setText("");
-        spinner.setSelection(0);
-        etName.setFocusable(false);
-        etName.setFocusableInTouchMode(false);
-        etName.setEnabled(false);
-        record.setEnabled(false);
-        cancel.setEnabled(false);
-        clear.setEnabled(false);
 
+    }
+
+    // 入れ替えボタン処理
+    public void onClickReplace(View view){
+
+        // 入れ替えボタンはenable(false)に(普通のfalseと区別するように色変えられないかな？？)
+        replace.setEnabled(false);
+        // 入れ替えクリックされているフラグ(キャンセル用)
+        isReplacing = true;
+        // キャンセルはできるように
+        cancel.setEnabled(true);
+        // タイトルが『２つボタンクリック』になる
+        title.setText(R.string.replace_title);
+        // いったんボタン全て色変わる
+
+
+        // ここの処理はここまで、
+        // 以下の処理はcommonMethod()内で色々処理しないと！！
+
+
+
+
+
+
+        // クリックしたボタンはさらに色変わる
+        // もう一回クリックすると１つ前に戻る
+        // ２つクリックすると入れ替え作業
+        // レイアウト場で入れ替え
+        // DB内で入れ替え
+
+        // 入れ替え中フラグもどす
+//        replace.setEnabled(false);
+
+        /**
+         * 根本的に違う
+         * だって、色々やるのは打順ボタンが２つ選ばれた時なんだから,
+         * ここでの処理は限られる
+         * commonMethod()内で色々処理しないと！！
+         */
     }
 
 
