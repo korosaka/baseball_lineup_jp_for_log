@@ -38,9 +38,8 @@ public class MainActivity extends AppCompatActivity {
     Button replace;
     // 入れ替え中フラグ
     Boolean isReplacing;
-    // １つ目２つ目入れ替え選択フラグ
+    // １つ目入れ替え選択フラグ
     Boolean isFirstReplaceClicked;
-    Boolean isSecondReplaceClicked;
     //スタメンタイトル
     TextView title;
     //各打順の数字配列
@@ -239,24 +238,54 @@ public class MainActivity extends AppCompatActivity {
     }
     //打順ボタン共通メソッド（打順・登録状態表示、EditText・登録/クリアボタンの有効化、データベース用の数字登録）
     public void commonMethod(int j){
-        //numbersは表示打順のためkを反映させない
-        String number = String.valueOf(numbers[j]) + "番";
-        tvSelectNum.setText(number);
-        //下記メソッド使用
-        setSpinner(spinner,positions[j + k]);
-        etName.setText(names[j + k]);
-        if(etName.getText().toString().equals("-----")){
-            etName.setText("");
+
+        // 入れ替え時のクリックと処理区別
+        if(isReplacing){
+            // 入れ替え時
+            if(!isFirstReplaceClicked){
+                // 1つめ選択時
+                // どのボタンがクリックされたか記憶
+                // そのボタンの色帰る
+
+            } else {
+                // 2つめ選択時
+
+                // 同じボタンがクリックされた →　元に戻す
+                // 異なるボタン →入れ替え処理
+
+                // レイアウト場で入れ替え
+                // DB内で入れ替え
+
+                // 入れ替え中フラグもどす
+//        replace.setEnabled(false);
+
+
+            }
+
+
+        } else {
+
+            //numbersは表示打順のためkを反映させない
+            String number = String.valueOf(numbers[j]) + "番";
+            tvSelectNum.setText(number);
+            //下記メソッド使用
+            setSpinner(spinner,positions[j + k]);
+            etName.setText(names[j + k]);
+            if(etName.getText().toString().equals("-----")){
+                etName.setText("");
+            }
+            etName.setEnabled(true);
+            etName.setFocusable(true);
+            etName.setFocusableInTouchMode(true);
+            etName.requestFocus();
+            record.setEnabled(true);
+            cancel.setEnabled(true);
+            clear.setEnabled(true);
+            replace.setEnabled(false);
+            i = j;
         }
-        etName.setEnabled(true);
-        etName.setFocusable(true);
-        etName.setFocusableInTouchMode(true);
-        etName.requestFocus();
-        record.setEnabled(true);
-        cancel.setEnabled(true);
-        clear.setEnabled(true);
-        replace.setEnabled(false);
-        i = j;
+
+
     }
     //文字列からスピナーをセットするメソッド（上記メソッドで使用）
     public void setSpinner(Spinner spinner,String position){
@@ -437,26 +466,6 @@ public class MainActivity extends AppCompatActivity {
         // ここの処理はここまで、
         // 以下の処理はcommonMethod()内で色々処理しないと！！
 
-
-
-
-
-
-        // クリックしたボタンはさらに色変わる
-        // もう一回クリックすると１つ前に戻る
-        // ２つクリックすると入れ替え作業
-        // レイアウト場で入れ替え
-        // DB内で入れ替え
-
-        // 入れ替え中フラグもどす
-//        replace.setEnabled(false);
-
-        /**
-         * 根本的に違う
-         * だって、色々やるのは打順ボタンが２つ選ばれた時なんだから,
-         * ここでの処理は限られる
-         * commonMethod()内で色々処理しないと！！
-         */
     }
 
 
