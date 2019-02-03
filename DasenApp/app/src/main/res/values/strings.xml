@@ -15,6 +15,7 @@
     <string name="save">登録</string>
     <string name="clear">クリア</string>
     <string name="title">~Starting Member~</string>
+    <string name="subtitle">~Starting Member~（サブ）</string>
     <string-array name="positions">
         <item>----</item>
         <item>(投)</item>

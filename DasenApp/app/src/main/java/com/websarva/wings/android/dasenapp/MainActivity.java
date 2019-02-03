@@ -50,29 +50,13 @@ public class MainActivity extends AppCompatActivity {
     //サブオーダー選択時に+10される
     int k = 0;
     //各打順の名前
-    TextView name1;
-    TextView name2;
-    TextView name3;
-    TextView name4;
-    TextView name5;
-    TextView name6;
-    TextView name7;
-    TextView name8;
-    TextView name9;
+    TextView[] name_tv = new TextView[9];
     //スピナーオブジェクト
     Spinner spinner;
     //クリアボタン（現在上部に入力中のものを未入力状態に戻す（選択打順も））
     Button clear;
     //各打順のポジション
-    TextView position1;
-    TextView position2;
-    TextView position3;
-    TextView position4;
-    TextView position5;
-    TextView position6;
-    TextView position7;
-    TextView position8;
-    TextView position9;
+    TextView[] position_tv = new TextView[9];
     //各打順の名前,ポジション用配列
     String[] names;
     String[] positions;
@@ -102,24 +86,24 @@ public class MainActivity extends AppCompatActivity {
         replace = findViewById(R.id.replace);
         clear = findViewById(R.id.clear);
         title = findViewById(R.id.title);
-        name1 = findViewById(R.id.name1);
-        name2 = findViewById(R.id.name2);
-        name3 = findViewById(R.id.name3);
-        name4 = findViewById(R.id.name4);
-        name5 = findViewById(R.id.name5);
-        name6 = findViewById(R.id.name6);
-        name7 = findViewById(R.id.name7);
-        name8 = findViewById(R.id.name8);
-        name9 = findViewById(R.id.name9);
-        position1 = findViewById(R.id.position1);
-        position2 = findViewById(R.id.position2);
-        position3 = findViewById(R.id.position3);
-        position4 = findViewById(R.id.position4);
-        position5 = findViewById(R.id.position5);
-        position6 = findViewById(R.id.position6);
-        position7 = findViewById(R.id.position7);
-        position8 = findViewById(R.id.position8);
-        position9 = findViewById(R.id.position9);
+        name_tv[0] = findViewById(R.id.name1);
+        name_tv[1] = findViewById(R.id.name2);
+        name_tv[2] = findViewById(R.id.name3);
+        name_tv[3] = findViewById(R.id.name4);
+        name_tv[4] = findViewById(R.id.name5);
+        name_tv[5] = findViewById(R.id.name6);
+        name_tv[6] = findViewById(R.id.name7);
+        name_tv[7] = findViewById(R.id.name8);
+        name_tv[8] = findViewById(R.id.name9);
+        position_tv[0] = findViewById(R.id.position1);
+        position_tv[1] = findViewById(R.id.position2);
+        position_tv[2] = findViewById(R.id.position3);
+        position_tv[3] = findViewById(R.id.position4);
+        position_tv[4] = findViewById(R.id.position5);
+        position_tv[5] = findViewById(R.id.position6);
+        position_tv[6] = findViewById(R.id.position7);
+        position_tv[7] = findViewById(R.id.position8);
+        position_tv[8] = findViewById(R.id.position9);
         number_buttons[0] = findViewById(R.id.btn1);
         number_buttons[1] = findViewById(R.id.btn2);
         number_buttons[2] = findViewById(R.id.btn3);
@@ -206,59 +190,38 @@ public class MainActivity extends AppCompatActivity {
                 db.close();
             }
         }
-        name1.setText(names[0]);
-        name2.setText(names[1]);
-        name3.setText(names[2]);
-        name4.setText(names[3]);
-        name5.setText(names[4]);
-        name6.setText(names[5]);
-        name7.setText(names[6]);
-        name8.setText(names[7]);
-        name9.setText(names[8]);
-        position1.setText(positions[0]);
-        position2.setText(positions[1]);
-        position3.setText(positions[2]);
-        position4.setText(positions[3]);
-        position5.setText(positions[4]);
-        position6.setText(positions[5]);
-        position7.setText(positions[6]);
-        position8.setText(positions[7]);
-        position9.setText(positions[8]);
+
+        for (int num = 0;num < 9;num++){
+            name_tv[num].setText(names[num]);
+            position_tv[num].setText(positions[num]);
+        }
     }
 
     //以下１〜９番の打順ボタン処理⬇
     public void onClick1(View view) {
         commonMethod(0);
     }
-
     public void onClick2(View view) {
         commonMethod(1);
     }
-
     public void onClick3(View view) {
         commonMethod(2);
     }
-
     public void onClick4(View view) {
         commonMethod(3);
     }
-
     public void onClick5(View view) {
         commonMethod(4);
     }
-
     public void onClick6(View view) {
         commonMethod(5);
     }
-
     public void onClick7(View view) {
         commonMethod(6);
     }
-
     public void onClick8(View view) {
         commonMethod(7);
     }
-
     public void onClick9(View view) {
         commonMethod(8);
     }
@@ -290,8 +253,8 @@ public class MainActivity extends AppCompatActivity {
                 } else {
                     // 異なるボタン →入れ替え処理
 
-                    // レイアウト場で入れ替え
-                    // DB内で入れ替え
+                    // DB/Layout内で入れ替え
+                    replacing2players(firstClicked,j);
 
                     // 入れ替え中フラグもどす
                     replace.setEnabled(false);
@@ -303,16 +266,17 @@ public class MainActivity extends AppCompatActivity {
                     firstClicked = -1;
                     replace.setEnabled(true);
                     cancel.setEnabled(false);
-                    title.setText(R.string.title);
-                    // TODO サブオーダーの時も
 
+                    if(k == 0){
+                        title.setText(R.string.title);
+                    } else {
+                        title.setText(R.string.subtitle);
+                    }
                 }
-
-
             }
 
-
         } else {
+            // 通常時の打順選択
 
             //numbersは表示打順のためkを反映させない
             String number = String.valueOf(numbers[j]) + "番";
@@ -334,7 +298,6 @@ public class MainActivity extends AppCompatActivity {
             i = j;
         }
 
-
     }
 
     //文字列からスピナーをセットするメソッド（上記メソッドで使用）
@@ -349,7 +312,6 @@ public class MainActivity extends AppCompatActivity {
         }
         spinner.setSelection(index);
     }
-
 
     //登録ボタン押した処理
     public void onClickSave(View view) {
@@ -407,62 +369,11 @@ public class MainActivity extends AppCompatActivity {
         replace.setEnabled(true);
 
         //画面のメンバー表に反映（１〜９番まで）
-        switch (i) {
-            case 0:
-                name1.setText(playerName);
-                position1.setText(position);
-                names[0 + k] = playerName;
-                positions[0 + k] = position;
-                break;
-            case 1:
-                name2.setText(playerName);
-                position2.setText(position);
-                names[1 + k] = playerName;
-                positions[1 + k] = position;
-                break;
-            case 2:
-                name3.setText(playerName);
-                position3.setText(position);
-                names[2 + k] = playerName;
-                positions[2 + k] = position;
-                break;
-            case 3:
-                name4.setText(playerName);
-                position4.setText(position);
-                names[3 + k] = playerName;
-                positions[3 + k] = position;
-                break;
-            case 4:
-                name5.setText(playerName);
-                position5.setText(position);
-                names[4 + k] = playerName;
-                positions[4 + k] = position;
-                break;
-            case 5:
-                name6.setText(playerName);
-                position6.setText(position);
-                names[5 + k] = playerName;
-                positions[5 + k] = position;
-                break;
-            case 6:
-                name7.setText(playerName);
-                position7.setText(position);
-                names[6 + k] = playerName;
-                positions[6 + k] = position;
-                break;
-            case 7:
-                name8.setText(playerName);
-                position8.setText(position);
-                names[7 + k] = playerName;
-                positions[7 + k] = position;
-                break;
-            case 8:
-                name9.setText(playerName);
-                position9.setText(position);
-                names[8 + k] = playerName;
-                positions[8 + k] = position;
-                break;
-        }
+        name_tv[i].setText(playerName);
+        position_tv[i].setText((position));
+        names[i + k] = playerName;
+        positions[i + k] = position;
+
     }
 
     //クリアボタン処理
@@ -484,9 +395,12 @@ public class MainActivity extends AppCompatActivity {
             isReplacing = false;
             isFirstReplaceClicked = false;
             firstClicked = -1;
-            // TODO サブオーダーの時も
 
-            title.setText(R.string.title);
+            if(k == 0){
+                title.setText(R.string.title);
+            } else {
+                title.setText(R.string.subtitle);
+            }
 
             if(isFirstReplaceClicked){
                 number_buttons[firstClicked].setTextColor(Color.parseColor("#000000"));
@@ -512,17 +426,14 @@ public class MainActivity extends AppCompatActivity {
     // 入れ替えボタン処理
     public void onClickReplace(View view) {
 
-        // 入れ替えクリックされているフラグ(キャンセル用)
+        // 入れ替えクリックされているフラグ
         isReplacing = true;
-        // 入れ替えボタンはenable(false)に(普通のfalseと区別するように色変えられないかな？？)
+        // 入れ替えボタンはenable(false)に
         replace.setEnabled(false);
         // キャンセルはできるように
         cancel.setEnabled(true);
         // タイトルが『２つボタンクリック』になる
         title.setText(R.string.replace_title);
-
-        // ここの処理はここまで、
-        // 以下の処理はcommonMethod()内で色々処理しないと！！
 
     }
 
@@ -601,29 +512,16 @@ public class MainActivity extends AppCompatActivity {
                 db.close();
             }
         }
-        name1.setText(names[0 + k]);
-        name2.setText(names[1 + k]);
-        name3.setText(names[2 + k]);
-        name4.setText(names[3 + k]);
-        name5.setText(names[4 + k]);
-        name6.setText(names[5 + k]);
-        name7.setText(names[6 + k]);
-        name8.setText(names[7 + k]);
-        name9.setText(names[8 + k]);
-        position1.setText(positions[0 + k]);
-        position2.setText(positions[1 + k]);
-        position3.setText(positions[2 + k]);
-        position4.setText(positions[3 + k]);
-        position5.setText(positions[4 + k]);
-        position6.setText(positions[5 + k]);
-        position7.setText(positions[6 + k]);
-        position8.setText(positions[7 + k]);
-        position9.setText(positions[8 + k]);
+
+        for (int num = 0;num < 9;num++){
+            name_tv[num].setText(names[num + k]);
+            position_tv[num].setText(positions[num + k]);
+        }
         //見出し変更
         if (k == 0) {
-            title.setText("~Starting Member~");
+            title.setText(R.string.title);
         } else {
-            title.setText("~Starting Member~（サブ）");
+            title.setText(R.string.subtitle);
         }
         //上部入力欄初期状態へ
         tvSelectNum.setText(getString(R.string.current_num));
@@ -637,6 +535,60 @@ public class MainActivity extends AppCompatActivity {
         clear.setEnabled(false);
         //親クラス同名メソッドで戻り値返却
         return super.onOptionsItemSelected(item);
+    }
+
+    public void replacing2players(int firstSelected,int secondSelected){
+
+        // DBで変更処理
+        DatabaseHelper helper = new DatabaseHelper(MainActivity.this);
+        SQLiteDatabase db = helper.getWritableDatabase();
+        try {
+            // 最初に選択した登録情報を消去
+            String sqlDelete = "DELETE FROM batting WHERE number = ?";
+            SQLiteStatement stmt = db.compileStatement(sqlDelete);
+            stmt.bindLong(1, numbers[firstSelected + k]);
+            stmt.executeUpdateDelete();
+            //そこに2番目に選択した登録情報を登録
+            String sqlInsert = "INSERT INTO batting(_id, number, playername, position) VALUES(?,?,?,?)";
+            stmt = db.compileStatement(sqlInsert);
+            stmt.bindLong(2, numbers[firstSelected + k]);
+            stmt.bindString(3, names[secondSelected + k]);
+            stmt.bindString(4, positions[secondSelected + k]);
+            stmt.executeInsert();
+
+            // 逆の処理
+            // 最初に選択した登録情報を消去
+            stmt = db.compileStatement(sqlDelete);
+            stmt.bindLong(1, numbers[secondSelected + k]);
+            stmt.executeUpdateDelete();
+            //そこに2番目に選択した登録情報を登録
+            stmt = db.compileStatement(sqlInsert);
+            stmt.bindLong(2, numbers[secondSelected + k]);
+            stmt.bindString(3, names[firstSelected + k]);
+            stmt.bindString(4, positions[firstSelected + k]);
+            stmt.executeInsert();
+
+        } catch (Exception e) {
+            Log.d("error", "例外発生");
+        } finally {
+            db.close();
+        }
+
+        // レイアウトに反映
+        name_tv[firstSelected].setText(names[secondSelected + k]);
+        position_tv[firstSelected].setText(positions[secondSelected + k]);
+
+        name_tv[secondSelected].setText(names[firstSelected + k]);
+        position_tv[secondSelected].setText(positions[firstSelected + k]);
+
+        // 最後に内部データを入れ替えとく
+        String name_box = names[firstSelected + k];
+        names[firstSelected + k] = names[secondSelected + k];
+        names[secondSelected + k] = name_box;
+
+        String position_box = positions[firstSelected + k];
+        positions[firstSelected + k] = positions[secondSelected + k];
+        positions[secondSelected + k] = position_box;
     }
 
 }
