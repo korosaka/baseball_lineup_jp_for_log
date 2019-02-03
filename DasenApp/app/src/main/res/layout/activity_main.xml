@@ -134,7 +134,8 @@
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:orientation="horizontal">
+                    android:orientation="horizontal"
+                    android:gravity="center_vertical">
 
                     <Button
                         android:id="@+id/btn1"
@@ -142,7 +143,9 @@
                         android:layout_height="wrap_content"
                         android:onClick="onClick1"
                         android:text="@string/first"
-                        android:textStyle="bold" />
+                        android:textStyle="bold"
+                        android:textSize="18sp"
+                        android:background="@drawable/button_custom"/>
 
                     <TextView
                         android:id="@+id/position1"
@@ -150,7 +153,6 @@
                         android:layout_height="wrap_content"
                         android:layout_marginLeft="10dp"
                         android:layout_marginRight="10dp"
-                        android:layout_marginTop="5dp"
                         android:text="@string/position"
                         android:textColor="@android:color/holo_green_dark"
                         android:textSize="28sp"
@@ -161,7 +163,6 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_marginLeft="20dp"
-                        android:layout_marginTop="5dp"
                         android:text="@string/unselected"
                         android:textColor="@color/colorPrimaryDark"
                         android:textSize="28sp"
@@ -172,7 +173,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:orientation="horizontal"
-                    android:layout_marginTop="-5sp">
+                    android:gravity="center_vertical">
 
                     <Button
                         android:id="@+id/btn2"
@@ -180,7 +181,9 @@
                         android:layout_height="wrap_content"
                         android:onClick="onClick2"
                         android:text="@string/second"
-                        android:textStyle="bold" />
+                        android:textStyle="bold"
+                        android:textSize="18sp"
+                        android:background="@drawable/button_custom"/>
 
                     <TextView
                         android:id="@+id/position2"
@@ -188,7 +191,6 @@
                         android:layout_height="wrap_content"
                         android:layout_marginLeft="10dp"
                         android:layout_marginRight="10dp"
-                        android:layout_marginTop="5dp"
                         android:text="@string/position"
                         android:textColor="@android:color/holo_green_dark"
                         android:textSize="28sp"
@@ -199,7 +201,6 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_marginLeft="20dp"
-                        android:layout_marginTop="5dp"
                         android:text="@string/unselected"
                         android:textColor="@color/colorPrimaryDark"
                         android:textSize="28sp"
@@ -210,7 +211,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:orientation="horizontal"
-                    android:layout_marginTop="-5sp">
+                    android:gravity="center_vertical">
 
                     <Button
                         android:id="@+id/btn3"
@@ -218,7 +219,9 @@
                         android:layout_height="wrap_content"
                         android:onClick="onClick3"
                         android:text="@string/third"
-                        android:textStyle="bold" />
+                        android:textStyle="bold"
+                        android:textSize="18sp"
+                        android:background="@drawable/button_custom"/>
 
                     <TextView
                         android:id="@+id/position3"
@@ -226,7 +229,6 @@
                         android:layout_height="wrap_content"
                         android:layout_marginLeft="10dp"
                         android:layout_marginRight="10dp"
-                        android:layout_marginTop="5dp"
                         android:text="@string/position"
                         android:textColor="@android:color/holo_green_dark"
                         android:textSize="28sp"
@@ -237,7 +239,6 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_marginLeft="20dp"
-                        android:layout_marginTop="5dp"
                         android:text="@string/unselected"
                         android:textColor="@color/colorPrimaryDark"
                         android:textSize="28sp"
@@ -248,7 +249,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:orientation="horizontal"
-                    android:layout_marginTop="-5sp">
+                    android:gravity="center_vertical">
 
                     <Button
                         android:id="@+id/btn4"
@@ -256,7 +257,9 @@
                         android:layout_height="wrap_content"
                         android:onClick="onClick4"
                         android:text="@string/fourth"
-                        android:textStyle="bold" />
+                        android:textStyle="bold"
+                        android:textSize="18sp"
+                        android:background="@drawable/button_custom"/>
 
                     <TextView
                         android:id="@+id/position4"
@@ -264,7 +267,6 @@
                         android:layout_height="wrap_content"
                         android:layout_marginLeft="10dp"
                         android:layout_marginRight="10dp"
-                        android:layout_marginTop="5dp"
                         android:text="@string/position"
                         android:textColor="@android:color/holo_green_dark"
                         android:textSize="28sp"
@@ -275,7 +277,6 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_marginLeft="20dp"
-                        android:layout_marginTop="5dp"
                         android:text="@string/unselected"
                         android:textColor="@color/colorPrimaryDark"
                         android:textSize="28sp"
@@ -286,7 +287,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:orientation="horizontal"
-                    android:layout_marginTop="-5sp">
+                    android:gravity="center_vertical">
 
 
                     <Button
@@ -295,7 +296,9 @@
                         android:layout_height="wrap_content"
                         android:onClick="onClick5"
                         android:text="@string/fifth"
-                        android:textStyle="bold" />
+                        android:textStyle="bold"
+                        android:textSize="18sp"
+                        android:background="@drawable/button_custom"/>
 
                     <TextView
                         android:id="@+id/position5"
@@ -303,7 +306,6 @@
                         android:layout_height="wrap_content"
                         android:layout_marginLeft="10dp"
                         android:layout_marginRight="10dp"
-                        android:layout_marginTop="5dp"
                         android:text="@string/position"
                         android:textColor="@android:color/holo_green_dark"
                         android:textSize="28sp"
@@ -314,7 +316,6 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_marginLeft="20dp"
-                        android:layout_marginTop="5dp"
                         android:text="@string/unselected"
                         android:textColor="@color/colorPrimaryDark"
                         android:textSize="28sp"
@@ -325,7 +326,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:orientation="horizontal"
-                    android:layout_marginTop="-5sp">
+                    android:gravity="center_vertical">
 
 
                     <Button
@@ -334,7 +335,9 @@
                         android:layout_height="wrap_content"
                         android:onClick="onClick6"
                         android:text="@string/sixth"
-                        android:textStyle="bold" />
+                        android:textStyle="bold"
+                        android:textSize="18sp"
+                        android:background="@drawable/button_custom"/>
 
                     <TextView
                         android:id="@+id/position6"
@@ -342,7 +345,6 @@
                         android:layout_height="wrap_content"
                         android:layout_marginLeft="10dp"
                         android:layout_marginRight="10dp"
-                        android:layout_marginTop="5dp"
                         android:text="@string/position"
                         android:textColor="@android:color/holo_green_dark"
                         android:textSize="28sp"
@@ -353,7 +355,6 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_marginLeft="20dp"
-                        android:layout_marginTop="5dp"
                         android:text="@string/unselected"
                         android:textColor="@color/colorPrimaryDark"
                         android:textSize="28sp"
@@ -364,7 +365,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:orientation="horizontal"
-                    android:layout_marginTop="-5sp">
+                    android:gravity="center_vertical">
 
 
                     <Button
@@ -373,7 +374,9 @@
                         android:layout_height="wrap_content"
                         android:onClick="onClick7"
                         android:text="@string/seventh"
-                        android:textStyle="bold" />
+                        android:textStyle="bold"
+                        android:textSize="18sp"
+                        android:background="@drawable/button_custom"/>
 
                     <TextView
                         android:id="@+id/position7"
@@ -381,7 +384,6 @@
                         android:layout_height="wrap_content"
                         android:layout_marginLeft="10dp"
                         android:layout_marginRight="10dp"
-                        android:layout_marginTop="5dp"
                         android:text="@string/position"
                         android:textColor="@android:color/holo_green_dark"
                         android:textSize="28sp"
@@ -392,7 +394,6 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_marginLeft="20dp"
-                        android:layout_marginTop="5dp"
                         android:text="@string/unselected"
                         android:textColor="@color/colorPrimaryDark"
                         android:textSize="28sp"
@@ -403,7 +404,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:orientation="horizontal"
-                    android:layout_marginTop="-5sp">
+                    android:gravity="center_vertical">
 
 
                     <Button
@@ -412,7 +413,9 @@
                         android:layout_height="wrap_content"
                         android:onClick="onClick8"
                         android:text="@string/eighth"
-                        android:textStyle="bold" />
+                        android:textStyle="bold"
+                        android:textSize="18sp"
+                        android:background="@drawable/button_custom"/>
 
                     <TextView
                         android:id="@+id/position8"
@@ -420,7 +423,6 @@
                         android:layout_height="wrap_content"
                         android:layout_marginLeft="10dp"
                         android:layout_marginRight="10dp"
-                        android:layout_marginTop="5dp"
                         android:text="@string/position"
                         android:textColor="@android:color/holo_green_dark"
                         android:textSize="28sp"
@@ -431,7 +433,6 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_marginLeft="20dp"
-                        android:layout_marginTop="5dp"
                         android:text="@string/unselected"
                         android:textColor="@color/colorPrimaryDark"
                         android:textSize="28sp"
@@ -443,7 +444,7 @@
                     android:layout_height="wrap_content"
                     android:orientation="horizontal"
                     android:layout_marginBottom="10dp"
-                    android:layout_marginTop="-5sp">
+                    android:gravity="center_vertical">
 
 
                     <Button
@@ -452,7 +453,9 @@
                         android:layout_height="wrap_content"
                         android:onClick="onClick9"
                         android:text="@string/ninth"
-                        android:textStyle="bold" />
+                        android:textStyle="bold"
+                        android:textSize="18sp"
+                        android:background="@drawable/button_custom"/>
 
                     <TextView
                         android:id="@+id/position9"
@@ -460,7 +463,6 @@
                         android:layout_height="wrap_content"
                         android:layout_marginLeft="10dp"
                         android:layout_marginRight="10dp"
-                        android:layout_marginTop="5dp"
                         android:text="@string/position"
                         android:textColor="@android:color/holo_green_dark"
                         android:textSize="28sp"
@@ -471,7 +473,6 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_marginLeft="20dp"
-                        android:layout_marginTop="5dp"
                         android:text="@string/unselected"
                         android:textColor="@color/colorPrimaryDark"
                         android:textSize="28sp"
@@ -488,7 +489,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         ads:adSize="BANNER"
-        ads:adUnitId="ca-app-pub-6298264304843789/6273376185">
+        ads:adUnitId="ca-app-pub-3940256099942544/6300978111">
     </com.google.android.gms.ads.AdView>
 
 
