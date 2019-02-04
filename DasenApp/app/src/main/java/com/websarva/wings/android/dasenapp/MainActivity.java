@@ -388,7 +388,13 @@ public class MainActivity extends AppCompatActivity {
     public void onClickCancel(View view) {
 
         // 入れ替えボタンクリック時のキャンセルor入力中のキャンセル？
+
         if (isReplacing) {
+            // ボタン色戻し
+            if(isFirstReplaceClicked){
+                number_buttons[firstClicked].setTextColor(Color.parseColor("#000000"));
+            }
+
             //入れ替えボタン戻し
             replace.setEnabled(true);
             //入れ替えフラグ戻し
@@ -402,9 +408,6 @@ public class MainActivity extends AppCompatActivity {
                 title.setText(R.string.subtitle);
             }
 
-            if(isFirstReplaceClicked){
-                number_buttons[firstClicked].setTextColor(Color.parseColor("#000000"));
-            }
 
         } else {
             //それぞれ初期状態に戻す
@@ -533,6 +536,16 @@ public class MainActivity extends AppCompatActivity {
         record.setEnabled(false);
         cancel.setEnabled(false);
         clear.setEnabled(false);
+
+        if(isFirstReplaceClicked){
+            number_buttons[firstClicked].setTextColor(Color.parseColor("#000000"));
+        }
+
+        replace.setEnabled(true);
+        isReplacing = false;
+        isFirstReplaceClicked = false;
+        firstClicked = -1;
+
         //親クラス同名メソッドで戻り値返却
         return super.onOptionsItemSelected(item);
     }
