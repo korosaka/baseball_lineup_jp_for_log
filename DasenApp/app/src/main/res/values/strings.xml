@@ -9,6 +9,8 @@
     <string name="seventh">７番</string>
     <string name="eighth">８番</string>
     <string name="ninth">９番</string>
+    <string name="pitcher">P</string>
+    <string name="pitcher_text">(投)</string>
     <string name="unselected">-----</string>
     <string name="current_num">----</string>
     <string name="position">----</string>
