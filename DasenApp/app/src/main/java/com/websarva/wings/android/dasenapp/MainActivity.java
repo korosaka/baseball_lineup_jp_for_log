@@ -170,76 +170,138 @@ public class MainActivity extends AppCompatActivity {
 
     //打順ボタン共通メソッド（打順・登録状態表示、EditText・登録/クリアボタンの有効化、データベース用の数字登録）
     public void commonMethod(int j) {
-
         // 入れ替え時のクリックと処理区別
         if (isReplacing) {
-
-            // 入れ替え時
-            if (!isFirstReplaceClicked) {
-                // 1つめ選択時
-
-                number_buttons[j].setTextColor(Color.parseColor("#FF0000"));
-                firstClicked = j;
-                isFirstReplaceClicked = true;
-
-            } else {
-                // 2つめ選択時
-
-                if (j == firstClicked) {
-                    // 同じボタンがクリックされた →　元に戻す
-
-                    number_buttons[j].setTextColor(Color.parseColor("#000000"));
-                    isFirstReplaceClicked = false;
-                    firstClicked = -1;
-
-                } else {
-                    // 異なるボタン →入れ替え処理
-
-                    // DB/Layout内で入れ替え
-                    replacing2players(firstClicked, j);
-
-                    // 入れ替え中フラグもどす
-                    replace.setEnabled(false);
-                    // 色々戻す
-                    number_buttons[firstClicked].setTextColor(Color.parseColor("#000000"));
-
-                    isReplacing = false;
-                    isFirstReplaceClicked = false;
-                    firstClicked = -1;
-                    replace.setEnabled(true);
-                    cancel.setEnabled(false);
-
-                    if (k == 0) {
-                        title.setText(R.string.title);
-                    } else {
-                        title.setText(R.string.subtitle);
-                    }
-                }
-            }
+            replaceMethod(j);
 
         } else {
             // 通常時の打順選択
+            selectNum(j);
+        }
+    }
 
-            //numbersは表示打順のためkを反映させない
-            String number = String.valueOf(numbers[j]) + "番";
-            tvSelectNum.setText(number);
-            //下記メソッド使用
-            setSpinner(spinner, positions[j + k]);
-            etName.setText(names[j + k]);
-            if (etName.getText().toString().equals("-----")) {
-                etName.setText("");
+    private void replaceMethod(int j) {
+        // 入れ替え時
+        if (!isFirstReplaceClicked) {
+            // 1つめ選択時
+            selectFirstReplacing(j);
+        } else {
+            // 2つめ選択時
+            if (j == firstClicked) {
+                // 同じボタンがクリックされた →　元に戻す
+                setButtonDefault(j);
+            } else {
+                // 異なるボタン →入れ替え処理
+                // DB/Layout内で入れ替え
+                replacing2players(firstClicked, j);
+                putSettingBack();
             }
-            etName.setEnabled(true);
-            etName.setFocusable(true);
-            etName.setFocusableInTouchMode(true);
-            etName.requestFocus();
-            record.setEnabled(true);
-            cancel.setEnabled(true);
-            clear.setEnabled(true);
-            replace.setEnabled(false);
-            i = j;
+        }
+    }
+
+    private void selectFirstReplacing(int num) {
+        number_buttons[num].setTextColor(Color.parseColor("#FF0000"));
+        firstClicked = num;
+        isFirstReplaceClicked = true;
+    }
+
+    private void setButtonDefault(int num) {
+        number_buttons[num].setTextColor(Color.parseColor("#000000"));
+        isFirstReplaceClicked = false;
+        firstClicked = -1;
+    }
+
+    public void replacing2players(int firstSelected, int secondSelected) {
+
+        // DBで変更処理
+        DatabaseHelper helper = new DatabaseHelper(MainActivity.this);
+        SQLiteDatabase db = helper.getWritableDatabase();
+        try {
+            // 最初に選択した登録情報を消去
+            String sqlDelete = "DELETE FROM batting WHERE number = ?";
+            SQLiteStatement stmt = db.compileStatement(sqlDelete);
+            stmt.bindLong(1, numbers[firstSelected + k]);
+            stmt.executeUpdateDelete();
+            //そこに2番目に選択した登録情報を登録
+            String sqlInsert = "INSERT INTO batting(_id, number, playername, position) VALUES(?,?,?,?)";
+            stmt = db.compileStatement(sqlInsert);
+            stmt.bindLong(2, numbers[firstSelected + k]);
+            stmt.bindString(3, names[secondSelected + k]);
+            stmt.bindString(4, positions[secondSelected + k]);
+            stmt.executeInsert();
+
+            // 逆の処理
+            // 最初に選択した登録情報を消去
+            stmt = db.compileStatement(sqlDelete);
+            stmt.bindLong(1, numbers[secondSelected + k]);
+            stmt.executeUpdateDelete();
+            //そこに2番目に選択した登録情報を登録
+            stmt = db.compileStatement(sqlInsert);
+            stmt.bindLong(2, numbers[secondSelected + k]);
+            stmt.bindString(3, names[firstSelected + k]);
+            stmt.bindString(4, positions[firstSelected + k]);
+            stmt.executeInsert();
+
+        } catch (Exception e) {
+            Log.d("error", "例外発生");
+        } finally {
+            db.close();
         }
 
+        // レイアウトに反映
+        name_tv[firstSelected].setText(names[secondSelected + k]);
+        position_tv[firstSelected].setText(positions[secondSelected + k]);
+
+        name_tv[secondSelected].setText(names[firstSelected + k]);
+        position_tv[secondSelected].setText(positions[firstSelected + k]);
+
+        // 最後に内部データを入れ替えとく
+        String name_box = names[firstSelected + k];
+        names[firstSelected + k] = names[secondSelected + k];
+        names[secondSelected + k] = name_box;
+
+        String position_box = positions[firstSelected + k];
+        positions[firstSelected + k] = positions[secondSelected + k];
+        positions[secondSelected + k] = position_box;
+    }
+
+    private void putSettingBack() {
+        // 色々戻す
+
+        replace.setEnabled(false);
+        number_buttons[firstClicked].setTextColor(Color.parseColor("#000000"));
+        isReplacing = false;
+        isFirstReplaceClicked = false;
+        firstClicked = -1;
+        replace.setEnabled(true);
+        cancel.setEnabled(false);
+        if (k == 0) {
+            title.setText(R.string.title);
+        } else {
+            title.setText(R.string.subtitle);
+        }
+    }
+
+    private void selectNum(int num) {
+
+        //numbersは表示打順のためkを反映させない
+        String number = String.valueOf(numbers[num]) + "番";
+        tvSelectNum.setText(number);
+        //下記メソッド使用
+        setSpinner(spinner, positions[num + k]);
+        etName.setText(names[num + k]);
+        if (etName.getText().toString().equals("-----")) {
+            etName.setText("");
+        }
+        etName.setEnabled(true);
+        etName.setFocusable(true);
+        etName.setFocusableInTouchMode(true);
+        etName.requestFocus();
+        record.setEnabled(true);
+        cancel.setEnabled(true);
+        clear.setEnabled(true);
+        replace.setEnabled(false);
+        i = num;
     }
 
     //文字列からスピナーをセットするメソッド（上記メソッドで使用）
@@ -492,58 +554,5 @@ public class MainActivity extends AppCompatActivity {
         return super.onOptionsItemSelected(item);
     }
 
-    public void replacing2players(int firstSelected, int secondSelected) {
-
-        // DBで変更処理
-        DatabaseHelper helper = new DatabaseHelper(MainActivity.this);
-        SQLiteDatabase db = helper.getWritableDatabase();
-        try {
-            // 最初に選択した登録情報を消去
-            String sqlDelete = "DELETE FROM batting WHERE number = ?";
-            SQLiteStatement stmt = db.compileStatement(sqlDelete);
-            stmt.bindLong(1, numbers[firstSelected + k]);
-            stmt.executeUpdateDelete();
-            //そこに2番目に選択した登録情報を登録
-            String sqlInsert = "INSERT INTO batting(_id, number, playername, position) VALUES(?,?,?,?)";
-            stmt = db.compileStatement(sqlInsert);
-            stmt.bindLong(2, numbers[firstSelected + k]);
-            stmt.bindString(3, names[secondSelected + k]);
-            stmt.bindString(4, positions[secondSelected + k]);
-            stmt.executeInsert();
-
-            // 逆の処理
-            // 最初に選択した登録情報を消去
-            stmt = db.compileStatement(sqlDelete);
-            stmt.bindLong(1, numbers[secondSelected + k]);
-            stmt.executeUpdateDelete();
-            //そこに2番目に選択した登録情報を登録
-            stmt = db.compileStatement(sqlInsert);
-            stmt.bindLong(2, numbers[secondSelected + k]);
-            stmt.bindString(3, names[firstSelected + k]);
-            stmt.bindString(4, positions[firstSelected + k]);
-            stmt.executeInsert();
-
-        } catch (Exception e) {
-            Log.d("error", "例外発生");
-        } finally {
-            db.close();
-        }
-
-        // レイアウトに反映
-        name_tv[firstSelected].setText(names[secondSelected + k]);
-        position_tv[firstSelected].setText(positions[secondSelected + k]);
-
-        name_tv[secondSelected].setText(names[firstSelected + k]);
-        position_tv[secondSelected].setText(positions[firstSelected + k]);
-
-        // 最後に内部データを入れ替えとく
-        String name_box = names[firstSelected + k];
-        names[firstSelected + k] = names[secondSelected + k];
-        names[secondSelected + k] = name_box;
-
-        String position_box = positions[firstSelected + k];
-        positions[firstSelected + k] = positions[secondSelected + k];
-        positions[secondSelected + k] = position_box;
-    }
 
 }
