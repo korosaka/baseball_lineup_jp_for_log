@@ -285,11 +285,11 @@ public class MainActivity extends AppCompatActivity {
     private void selectNum(int num) {
 
         //numbersは表示打順のためkを反映させない
-        String number = String.valueOf(numbers[num]) + "番";
+        String number = String.valueOf(num + 1) + "番";
         tvSelectNum.setText(number);
         //下記メソッド使用
-        setSpinner(spinner, positions[num + k]);
-        etName.setText(names[num + k]);
+        setSpinner(spinner, CachedPlayerPositionsInfo.instance.getPositionNormal(num));
+        etName.setText(CachedPlayerNamesInfo.instance.getNameNormal(num));
         if (etName.getText().toString().equals("-----")) {
             etName.setText("");
         }
