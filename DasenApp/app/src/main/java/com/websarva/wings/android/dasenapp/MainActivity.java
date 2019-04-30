@@ -26,8 +26,6 @@ import com.google.android.gms.ads.AdView;
 import com.google.android.gms.ads.MobileAds;
 
 public class MainActivity extends AppCompatActivity {
-    //広告ビュー
-    private AdView mAdView;
     //選択した打順
     TextView tvSelectNum;
     //入力欄
@@ -73,15 +71,26 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        //広告処理
-        MobileAds.initialize(this, "ca-app-pub-6298264304843789~9524433477");
-        mAdView = findViewById(R.id.adView);
-        AdRequest adRequest = new AdRequest.Builder().build();
-        mAdView.loadAd(adRequest);
+        setAdsense();
 
         DatabaseUsing databaseUsing = new DatabaseUsing(this);
         databaseUsing.getPlayersInfo(1);
 
+        bindLayout();
+        setEdit();
+        setOrderFragment();
+    }
+
+    private void setAdsense() {
+        //広告処理
+        MobileAds.initialize(this, "ca-app-pub-6298264304843789~9524433477");
+        //広告ビュー
+        AdView mAdView = findViewById(R.id.adView);
+        AdRequest adRequest = new AdRequest.Builder().build();
+        mAdView.loadAd(adRequest);
+    }
+
+    private void bindLayout() {
         //上記のグローバルフィールド紐付け
         tvSelectNum = findViewById(R.id.selectNum);
         etName = findViewById(R.id.etName);
@@ -89,10 +98,10 @@ public class MainActivity extends AppCompatActivity {
         cancel = findViewById(R.id.cancel);
         replace = findViewById(R.id.replace);
         clear = findViewById(R.id.clear);
-
-
-        //スピナー紐付け
         spinner = findViewById(R.id.position);
+    }
+
+    private void setEdit() {
         //EditText入力不可に
         etName.setFocusable(false);
         etName.setFocusableInTouchMode(false);
@@ -112,8 +121,9 @@ public class MainActivity extends AppCompatActivity {
                 }
             }
         });
+    }
 
-
+    private void setOrderFragment() {
         NormalLineupFragment normalLineupFragment = NormalLineupFragment.newInstance();
         FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
         transaction.add(R.id.lineup_container, normalLineupFragment);
