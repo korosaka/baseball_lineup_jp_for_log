@@ -3,6 +3,7 @@ package com.websarva.wings.android.dasenapp;
 import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
+import android.database.sqlite.SQLiteStatement;
 import android.util.Log;
 
 public class DatabaseUsing {
@@ -74,7 +75,7 @@ public class DatabaseUsing {
     /**
      * DBから登録データ取得
      */
-    private void getDatabaseInfo(int version, int num) {
+    public void getDatabaseInfo(int version, int num) {
         //ヘルパーから接続オブジェクト取得
         SQLiteDatabase dbR = helper.getReadableDatabase();
         try {
@@ -158,6 +159,64 @@ public class DatabaseUsing {
                 break;
         }
 
+    }
+
+    /**
+     * データベースへ登録処理(削除→登録)
+     */
+    public void setDatebaseInfo(int version, int num, String name, String position) {
+
+        SQLiteDatabase dbW = helper.getWritableDatabase();
+
+        try {
+            //今あるデータ削除➡その後インサート
+
+            deleteSqlData(version, num, dbW);
+            insertSqlData(version, num, dbW, name, position);
+        } catch (Exception e) {
+            Log.d("error", "例外発生");
+        } finally {
+            //データ接続プブジェクト解放
+            dbW.close();
+        }
+    }
+
+    /**
+     * 削除処理
+     * @param version
+     * @param num
+     * @param dbW
+     */
+    private void deleteSqlData(int version, int num, SQLiteDatabase dbW) {
+        //削除用文字列
+        String sqlDelete = "DELETE FROM lineup WHERE number = ?";
+        //上記文字列からPreparedStatement取得（SQLを実行するためのインターフェース）
+        SQLiteStatement stmt = dbW.compileStatement(sqlDelete);
+        //変数バインド（数字は何番目の？に入れるか,？に入れるもの）（kはオプション選択によって変わる）
+        stmt.bindLong(1, version * 100 + num);
+        //削除SQL実行
+        stmt.executeUpdateDelete();
+    }
+
+    /**
+     * 登録処理
+     * @param version
+     * @param num
+     * @param dbW
+     * @param name
+     * @param position
+     */
+    private void insertSqlData(int version, int num, SQLiteDatabase dbW, String name, String position) {
+        //インサート用文字
+        String sqlInsert = "INSERT INTO lineup(_id, number, playerName, position) VALUES(?,?,?,?)";
+        //PreparedStatement取得 (stmtは削除で使ったものの再利用)
+        SQLiteStatement stmt = dbW.compileStatement(sqlInsert);
+        //_id(primary key) は設定不要らしい
+        stmt.bindLong(2, version * 100 + num);
+        stmt.bindString(3, name);
+        stmt.bindString(4, position);
+        //インサートSQL実行
+        stmt.executeInsert();
     }
 
 
