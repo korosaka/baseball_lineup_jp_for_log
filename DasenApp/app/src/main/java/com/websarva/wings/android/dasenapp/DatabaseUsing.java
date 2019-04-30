@@ -9,8 +9,6 @@ import android.util.Log;
 public class DatabaseUsing {
 
     private DatabaseHelper helper;
-    private String playerName;
-    private String playerPosition;
 
     public DatabaseUsing(Context context) {
         //データベースからデータを取り出してきて表示する処理
@@ -76,6 +74,10 @@ public class DatabaseUsing {
      * DBから登録データ取得
      */
     public void getDatabaseInfo(int version, int num) {
+
+        String playerName;
+        String playerPosition;
+
         //ヘルパーから接続オブジェクト取得
         SQLiteDatabase dbR = helper.getReadableDatabase();
         try {
