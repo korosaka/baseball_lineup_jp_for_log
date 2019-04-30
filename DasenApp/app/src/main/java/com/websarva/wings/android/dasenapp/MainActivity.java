@@ -2,7 +2,6 @@ package com.websarva.wings.android.dasenapp;
 
 import android.content.Context;
 import android.content.Intent;
-import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteStatement;
 import android.graphics.Color;
@@ -66,6 +65,7 @@ public class MainActivity extends AppCompatActivity {
     int firstClicked = -1;
     private DatabaseUsing databaseUsing;
     private NormalLineupFragment normalLineupFragment;
+    private DhLineupFragment dhLineupFragment;
 
 
     //ここからmain
@@ -76,7 +76,9 @@ public class MainActivity extends AppCompatActivity {
         setAdsense();
 
         databaseUsing = new DatabaseUsing(this);
-        databaseUsing.getPlayersInfo(1);
+        for (int version = 1; version < 3; version++) {
+            databaseUsing.getPlayersInfo(version);
+        }
 
         bindLayout();
         setEdit();
@@ -127,9 +129,12 @@ public class MainActivity extends AppCompatActivity {
 
     private void setOrderFragment() {
         normalLineupFragment = NormalLineupFragment.newInstance();
+        dhLineupFragment = DhLineupFragment.newInstance();
         FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
         transaction.add(R.id.lineup_container, normalLineupFragment);
+        transaction.add(R.id.lineup_container, dhLineupFragment);
         transaction.show(normalLineupFragment);
+        transaction.hide(dhLineupFragment);
         transaction.commit();
     }
 
@@ -283,26 +288,25 @@ public class MainActivity extends AppCompatActivity {
 
     private void selectNum(int num) {
 
-        //numbersは表示打順のためkを反映させない
-        String number = String.valueOf(num + 1) + "番";
-        tvSelectNum.setText(number);
-        //下記メソッド使用
-        setSpinner(spinner, CachedPlayerPositionsInfo.instance.getPositionNormal(num));
-        etName.setText(CachedPlayerNamesInfo.instance.getNameNormal(num));
-        if (etName.getText().toString().equals("-----")) etName.setText("");
-        etName.setEnabled(true);
-        etName.setFocusable(true);
-        etName.setFocusableInTouchMode(true);
-        etName.requestFocus();
-        record.setEnabled(true);
-        cancel.setEnabled(true);
-        clear.setEnabled(true);
-        replace.setEnabled(false);
+        String position = FixedWords.EMPTY;
+        String playerName = FixedWords.EMPTY;
+
+        switch (CurrentOrderVersion.instance.getCurrentVersion()) {
+            case FixedWords.DEFAULT:
+                position = CachedPlayerPositionsInfo.instance.getPositionNormal(num);
+                playerName = CachedPlayerNamesInfo.instance.getNameNormal(num);
+                break;
+            case FixedWords.DH:
+                position = CachedPlayerPositionsInfo.instance.getPositionDh(num);
+                playerName = CachedPlayerNamesInfo.instance.getNameDh(num);
+                break;
+        }
+        readyInputtingName(num, position, playerName);
         i = num;
     }
 
     //文字列からスピナーをセットするメソッド（上記メソッドで使用）
-    public void setSpinner(Spinner spinner, String position) {
+    private void setSpinner(Spinner spinner, String position) {
         SpinnerAdapter adapter = spinner.getAdapter();
         int index = 0;
         for (int i = 0; i < adapter.getCount(); i++) {
@@ -312,6 +316,24 @@ public class MainActivity extends AppCompatActivity {
             }
         }
         spinner.setSelection(index);
+    }
+
+    private void readyInputtingName(int num, String position, String name) {
+        //numbersは表示打順のためkを反映させない
+        String number = String.valueOf(num + 1) + "番";
+        tvSelectNum.setText(number);
+        //下記メソッド使用
+        setSpinner(spinner, position);
+        etName.setText(name);
+        if (etName.getText().toString().equals("-----")) etName.setText("");
+        etName.setEnabled(true);
+        etName.setFocusable(true);
+        etName.setFocusableInTouchMode(true);
+        etName.requestFocus();
+        record.setEnabled(true);
+        cancel.setEnabled(true);
+        clear.setEnabled(true);
+        replace.setEnabled(false);
     }
 
     //登録ボタン押した処理
@@ -330,6 +352,11 @@ public class MainActivity extends AppCompatActivity {
                 normalLineupFragment.changeData(i, playerName, position);
                 CachedPlayerNamesInfo.instance.setNameNormal(i, playerName);
                 CachedPlayerPositionsInfo.instance.setPositionNormal(i, position);
+                break;
+            case FixedWords.DH:
+                dhLineupFragment.changeData(i, playerName, position);
+                CachedPlayerNamesInfo.instance.setNameDh(i, playerName);
+                CachedPlayerPositionsInfo.instance.setPositionDh(i, position);
                 break;
         }
 
@@ -431,16 +458,23 @@ public class MainActivity extends AppCompatActivity {
     public boolean onOptionsItemSelected(MenuItem item) {
         //選択されたオプションメニューのID取得
         int itemId = item.getItemId();
+        FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
+
         //IDのR値による処理分岐
         switch (itemId) {
             //オーダー選択の場合
             case R.id.oder:
-                k = 0;
+                transaction.hide(dhLineupFragment);
+                transaction.show(normalLineupFragment);
+                transaction.commit();
+                CurrentOrderVersion.instance.setCurrentVersion(FixedWords.DEFAULT);
                 break;
             //サブオーダーの場合
             case R.id.subOder:
-                //データベース上の打順が11〜19番を対象に
-                k = 10;
+                transaction.hide(normalLineupFragment);
+                transaction.show(dhLineupFragment);
+                transaction.commit();
+                CurrentOrderVersion.instance.setCurrentVersion(FixedWords.DH);
                 break;
             case R.id.field:
                 //遷移先に送るデータ（各守備位置・名前）
@@ -459,47 +493,6 @@ public class MainActivity extends AppCompatActivity {
                 break;
         }
 
-        //以下はmainで行った処理とほとんど同じ
-        DatabaseHelper helper = new DatabaseHelper(MainActivity.this);
-        String name;
-        String position;
-        for (int j = 0; j < 9; j++) {
-            SQLiteDatabase db = helper.getReadableDatabase();
-            try {
-                //SQL文字列作成➡︎検索・表示（1~9番 or 11~19番）(mainメソッドとほぼ同じ)
-                String sqlSelect = "SELECT playername,position FROM batting WHERE number = " + numbers[j + k];
-                Cursor cursor = db.rawQuery(sqlSelect, null);
-                if (cursor.moveToNext()) {
-                    int idxName = cursor.getColumnIndex("playername");
-                    int idxPosition = cursor.getColumnIndex("position");
-                    name = cursor.getString(idxName);
-                    position = cursor.getString(idxPosition);
-                    if (name.equals("")) {
-                        name = "-----";
-                    }
-                } else {
-                    name = "-----";
-                    position = "----";
-                }
-                names[j + k] = name;
-                positions[j + k] = position;
-            } catch (Exception e) {
-                Log.e("キャッチ2", "エラー2", e);
-            } finally {
-                db.close();
-            }
-        }
-
-        for (int num = 0; num < 9; num++) {
-            name_tv[num].setText(names[num + k]);
-            position_tv[num].setText(positions[num + k]);
-        }
-        //見出し変更
-        if (k == 0) {
-            title.setText(R.string.title);
-        } else {
-            title.setText(R.string.subtitle);
-        }
         //上部入力欄初期状態へ
         tvSelectNum.setText(getString(R.string.current_num));
         etName.setText("");
