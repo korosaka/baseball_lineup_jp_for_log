@@ -12,7 +12,7 @@ public class NormalLineupFragment extends Fragment {
     private TextView[] names = new TextView[9];
     private TextView[] positions = new TextView[9];
 
-    public static NormalLineupFragment newInstance(String[] names, String[] positions) {
+    public static NormalLineupFragment newInstance() {
 
         return new NormalLineupFragment();
     }

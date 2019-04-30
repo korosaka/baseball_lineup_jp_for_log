@@ -7,6 +7,7 @@ import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteStatement;
 import android.graphics.Color;
 import android.os.Bundle;
+import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.Menu;
@@ -78,6 +79,9 @@ public class MainActivity extends AppCompatActivity {
         AdRequest adRequest = new AdRequest.Builder().build();
         mAdView.loadAd(adRequest);
 
+        DatabaseUsing databaseUsing = new DatabaseUsing(this);
+        databaseUsing.getPlayersInfo(1);
+
         //上記のグローバルフィールド紐付け
         tvSelectNum = findViewById(R.id.selectNum);
         etName = findViewById(R.id.etName);
@@ -85,40 +89,8 @@ public class MainActivity extends AppCompatActivity {
         cancel = findViewById(R.id.cancel);
         replace = findViewById(R.id.replace);
         clear = findViewById(R.id.clear);
-        title = findViewById(R.id.title);
-        name_tv[0] = findViewById(R.id.name1);
-        name_tv[1] = findViewById(R.id.name2);
-        name_tv[2] = findViewById(R.id.name3);
-        name_tv[3] = findViewById(R.id.name4);
-        name_tv[4] = findViewById(R.id.name5);
-        name_tv[5] = findViewById(R.id.name6);
-        name_tv[6] = findViewById(R.id.name7);
-        name_tv[7] = findViewById(R.id.name8);
-        name_tv[8] = findViewById(R.id.name9);
-        position_tv[0] = findViewById(R.id.position1);
-        position_tv[1] = findViewById(R.id.position2);
-        position_tv[2] = findViewById(R.id.position3);
-        position_tv[3] = findViewById(R.id.position4);
-        position_tv[4] = findViewById(R.id.position5);
-        position_tv[5] = findViewById(R.id.position6);
-        position_tv[6] = findViewById(R.id.position7);
-        position_tv[7] = findViewById(R.id.position8);
-        position_tv[8] = findViewById(R.id.position9);
-        number_buttons[0] = findViewById(R.id.btn1);
-        number_buttons[1] = findViewById(R.id.btn2);
-        number_buttons[2] = findViewById(R.id.btn3);
-        number_buttons[3] = findViewById(R.id.btn4);
-        number_buttons[4] = findViewById(R.id.btn5);
-        number_buttons[5] = findViewById(R.id.btn6);
-        number_buttons[6] = findViewById(R.id.btn7);
-        number_buttons[7] = findViewById(R.id.btn8);
-        number_buttons[8] = findViewById(R.id.btn9);
 
 
-        //打順配列に打順番号入れる(1~19番)
-        for (int i = 0; i < 19; i++) {
-            numbers[i] = i + 1;
-        }
         //スピナー紐付け
         spinner = findViewById(R.id.position);
         //EditText入力不可に
@@ -141,87 +113,47 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
-        //データベースからデータを取り出してきて表示する処理
-        //データベースヘルパーオブジェクト生成
-        DatabaseHelper helper = new DatabaseHelper(MainActivity.this);
-        //データベースに保存してある名前・守備位置を入れる変数用意
-        String name;
-        String position;
-        names = new String[19];
-        positions = new String[19];
-        //9人分のデータ取り出し
-        for (int j = 0; j < 9; j++) {
-            //ヘルパーから接続オブジェクト取得
-            SQLiteDatabase db = helper.getReadableDatabase();
-            try {
-                //SQL文字列作成➡︎検索・表示（１〜９番）
-                //SELECT文の文字列作成
-                String sqlSelect = "SELECT playername,position FROM batting WHERE number = " + numbers[j];
-                //sql実行（カーソルオブジェクト（実行結果そのもの？）が戻り値）
-                Cursor cursor = db.rawQuery(sqlSelect, null);
-                //cursor.moveToNext() ➡︎データない時（移動ができなかった時）はfalseになる
-                if (cursor.moveToNext()) {
-                    //カラムのインデックス値取得
-                    int idxName = cursor.getColumnIndex("playername");
-                    int idxPosition = cursor.getColumnIndex("position");
-                    //カラムのインデックス値を元に実際のデータ取得
-                    name = cursor.getString(idxName);
-                    position = cursor.getString(idxPosition);
-                    //名前の空白登録は未登録にする
-                    if (name.equals("")) {
-                        name = "-----";
-                    }
-                }
-                //データが無かった時
-                else {
-                    name = "-----";
-                    position = "----";
-                }
-                //各打順の名前・ポジションを配列に格納しておく
-                names[j] = name;
-                positions[j] = position;
-            }
-            //catchないとエラー出る　
-            catch (Exception e) {
-                //エラーメッセージ出す
-                Log.e("キャッチ", "エラー", e);
-            } finally {
-                //解放
-                db.close();
-            }
-        }
 
-        for (int num = 0;num < 9;num++){
-            name_tv[num].setText(names[num]);
-            position_tv[num].setText(positions[num]);
-        }
+        NormalLineupFragment normalLineupFragment = NormalLineupFragment.newInstance();
+        FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
+        transaction.add(R.id.lineup_container, normalLineupFragment);
+        transaction.show(normalLineupFragment);
+        transaction.commit();
     }
 
     //以下１〜９番の打順ボタン処理⬇
     public void onClick1(View view) {
         commonMethod(0);
     }
+
     public void onClick2(View view) {
         commonMethod(1);
     }
+
     public void onClick3(View view) {
         commonMethod(2);
     }
+
     public void onClick4(View view) {
         commonMethod(3);
     }
+
     public void onClick5(View view) {
         commonMethod(4);
     }
+
     public void onClick6(View view) {
         commonMethod(5);
     }
+
     public void onClick7(View view) {
         commonMethod(6);
     }
+
     public void onClick8(View view) {
         commonMethod(7);
     }
+
     public void onClick9(View view) {
         commonMethod(8);
     }
@@ -254,7 +186,7 @@ public class MainActivity extends AppCompatActivity {
                     // 異なるボタン →入れ替え処理
 
                     // DB/Layout内で入れ替え
-                    replacing2players(firstClicked,j);
+                    replacing2players(firstClicked, j);
 
                     // 入れ替え中フラグもどす
                     replace.setEnabled(false);
@@ -267,7 +199,7 @@ public class MainActivity extends AppCompatActivity {
                     replace.setEnabled(true);
                     cancel.setEnabled(false);
 
-                    if(k == 0){
+                    if (k == 0) {
                         title.setText(R.string.title);
                     } else {
                         title.setText(R.string.subtitle);
@@ -391,7 +323,7 @@ public class MainActivity extends AppCompatActivity {
 
         if (isReplacing) {
             // ボタン色戻し
-            if(isFirstReplaceClicked){
+            if (isFirstReplaceClicked) {
                 number_buttons[firstClicked].setTextColor(Color.parseColor("#000000"));
             }
 
@@ -402,7 +334,7 @@ public class MainActivity extends AppCompatActivity {
             isFirstReplaceClicked = false;
             firstClicked = -1;
 
-            if(k == 0){
+            if (k == 0) {
                 title.setText(R.string.title);
             } else {
                 title.setText(R.string.subtitle);
@@ -516,7 +448,7 @@ public class MainActivity extends AppCompatActivity {
             }
         }
 
-        for (int num = 0;num < 9;num++){
+        for (int num = 0; num < 9; num++) {
             name_tv[num].setText(names[num + k]);
             position_tv[num].setText(positions[num + k]);
         }
@@ -537,7 +469,7 @@ public class MainActivity extends AppCompatActivity {
         cancel.setEnabled(false);
         clear.setEnabled(false);
 
-        if(isFirstReplaceClicked){
+        if (isFirstReplaceClicked) {
             number_buttons[firstClicked].setTextColor(Color.parseColor("#000000"));
         }
 
@@ -550,7 +482,7 @@ public class MainActivity extends AppCompatActivity {
         return super.onOptionsItemSelected(item);
     }
 
-    public void replacing2players(int firstSelected,int secondSelected){
+    public void replacing2players(int firstSelected, int secondSelected) {
 
         // DBで変更処理
         DatabaseHelper helper = new DatabaseHelper(MainActivity.this);
