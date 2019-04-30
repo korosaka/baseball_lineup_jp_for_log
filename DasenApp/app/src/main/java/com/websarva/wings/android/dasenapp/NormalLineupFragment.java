@@ -59,4 +59,9 @@ public class NormalLineupFragment extends Fragment {
             positions[i].setText(CachedPlayerPositionsInfo.instance.getPositionNormal(i));
         }
     }
+
+    public void changeData(int num, String name, String position) {
+        names[num].setText(name);
+        positions[num].setText(position);
+    }
 }

@@ -64,6 +64,8 @@ public class MainActivity extends AppCompatActivity {
     Button[] number_buttons = new Button[9];
 
     int firstClicked = -1;
+    private DatabaseUsing databaseUsing;
+    private NormalLineupFragment normalLineupFragment;
 
 
     //ここからmain
@@ -73,7 +75,7 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
         setAdsense();
 
-        DatabaseUsing databaseUsing = new DatabaseUsing(this);
+        databaseUsing = new DatabaseUsing(this);
         databaseUsing.getPlayersInfo(1);
 
         bindLayout();
@@ -124,7 +126,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void setOrderFragment() {
-        NormalLineupFragment normalLineupFragment = NormalLineupFragment.newInstance();
+        normalLineupFragment = NormalLineupFragment.newInstance();
         FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
         transaction.add(R.id.lineup_container, normalLineupFragment);
         transaction.show(normalLineupFragment);
@@ -326,40 +328,11 @@ public class MainActivity extends AppCompatActivity {
         }
         //ポジション取得
         String position = (String) spinner.getSelectedItem();
-        //データベースヘルパー作成
-        DatabaseHelper helper = new DatabaseHelper(MainActivity.this);
-        //接続オブジェクト
-        SQLiteDatabase db = helper.getWritableDatabase();
-        try {
-            //今あるデータ削除➡その後インサート
-            //削除用文字列
-            String sqlDelete = "DELETE FROM batting WHERE number = ?";
-            //上記文字列からPreparedStatement取得（SQLを実行するためのインターフェース）
-            SQLiteStatement stmt = db.compileStatement(sqlDelete);
-            //変数バインド（数字は何番目の？に入れるか,？に入れるもの）（kはオプション選択によって変わる）
-            stmt.bindLong(1, numbers[i + k]);
-            //削除SQL実行
-            stmt.executeUpdateDelete();
 
-            //インサート用文字
-            //テーブルの内容等変える場合は、新たなテーブル名で作り直さないとエラーになる（詳細はDatabaseHelperクラスへ）
-            String sqlInsert = "INSERT INTO batting(_id, number, playername, position) VALUES(?,?,?,?)";
-            //PreparedStatement取得 (stmtは削除で使ったものの再利用)
-            stmt = db.compileStatement(sqlInsert);
-            //変数バインド（数字は何番目の？に入れるか,？に入れるもの）
-            //_id(primary key) は設定不要らしい
-            //サブオーダー選択時は打順は11~19番でデータベースに登録される
-            stmt.bindLong(2, numbers[i + k]);
-            stmt.bindString(3, playerName);
-            stmt.bindString(4, position);
-            //インサートSQL実行
-            stmt.executeInsert();
-        } catch (Exception e) {
-            Log.d("error", "例外発生");
-        } finally {
-            //データ接続プブジェクト解放
-            db.close();
-        }
+        databaseUsing.setDatabaseInfo(i, playerName, position);
+        CachedPlayerNamesInfo.instance.setNameNormal(i, playerName);
+        CachedPlayerPositionsInfo.instance.setPositionNormal(i, position);
+
         //それぞれ初期状態に戻す
         tvSelectNum.setText(getString(R.string.current_num));
         etName.setText("");
@@ -373,10 +346,7 @@ public class MainActivity extends AppCompatActivity {
         replace.setEnabled(true);
 
         //画面のメンバー表に反映（１〜９番まで）
-        name_tv[i].setText(playerName);
-        position_tv[i].setText((position));
-        names[i + k] = playerName;
-        positions[i + k] = position;
+        normalLineupFragment.changeData(i, playerName, position);
 
     }
 

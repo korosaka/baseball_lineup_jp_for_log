@@ -166,15 +166,16 @@ public class DatabaseUsing {
     /**
      * データベースへ登録処理(削除→登録)
      */
-    public void setDatebaseInfo(int version, int num, String name, String position) {
+    public void setDatabaseInfo(int num, String name, String position) {
 
         SQLiteDatabase dbW = helper.getWritableDatabase();
+        int currentVersion = CurrentOrderVersion.instance.getCurrentVersion();
 
         try {
             //今あるデータ削除➡その後インサート
 
-            deleteSqlData(version, num, dbW);
-            insertSqlData(version, num, dbW, name, position);
+            deleteSqlData(currentVersion, num, dbW);
+            insertSqlData(currentVersion, num, dbW, name, position);
         } catch (Exception e) {
             Log.d("error", "例外発生");
         } finally {
