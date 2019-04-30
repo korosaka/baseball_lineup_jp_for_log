@@ -277,11 +277,8 @@ public class MainActivity extends AppCompatActivity {
         firstClicked = -1;
         replace.setEnabled(true);
         cancel.setEnabled(false);
-        if (k == 0) {
-            title.setText(R.string.title);
-        } else {
-            title.setText(R.string.subtitle);
-        }
+        if (k == 0) title.setText(R.string.title);
+        else title.setText(R.string.subtitle);
     }
 
     private void selectNum(int num) {
@@ -292,9 +289,7 @@ public class MainActivity extends AppCompatActivity {
         //下記メソッド使用
         setSpinner(spinner, CachedPlayerPositionsInfo.instance.getPositionNormal(num));
         etName.setText(CachedPlayerNamesInfo.instance.getNameNormal(num));
-        if (etName.getText().toString().equals("-----")) {
-            etName.setText("");
-        }
+        if (etName.getText().toString().equals("-----")) etName.setText("");
         etName.setEnabled(true);
         etName.setFocusable(true);
         etName.setFocusableInTouchMode(true);
@@ -323,16 +318,25 @@ public class MainActivity extends AppCompatActivity {
     public void onClickSave(View view) {
         //入力文字列取得
         String playerName = etName.getText().toString();
-        if (playerName.equals("")) {
-            playerName = "-----";
-        }
+        if (playerName.equals("")) playerName = "-----";
         //ポジション取得
         String position = (String) spinner.getSelectedItem();
 
         databaseUsing.setDatabaseInfo(i, playerName, position);
-        CachedPlayerNamesInfo.instance.setNameNormal(i, playerName);
-        CachedPlayerPositionsInfo.instance.setPositionNormal(i, position);
 
+        switch (CurrentOrderVersion.instance.getCurrentVersion()) {
+            //画面のメンバー表に反映（１〜９番まで）
+            case FixedWords.DEFAULT:
+                normalLineupFragment.changeData(i, playerName, position);
+                CachedPlayerNamesInfo.instance.setNameNormal(i, playerName);
+                CachedPlayerPositionsInfo.instance.setPositionNormal(i, position);
+                break;
+        }
+
+        setLayoutDefault();
+    }
+
+    private void setLayoutDefault() {
         //それぞれ初期状態に戻す
         tvSelectNum.setText(getString(R.string.current_num));
         etName.setText("");
@@ -344,10 +348,6 @@ public class MainActivity extends AppCompatActivity {
         cancel.setEnabled(false);
         clear.setEnabled(false);
         replace.setEnabled(true);
-
-        //画面のメンバー表に反映（１〜９番まで）
-        normalLineupFragment.changeData(i, playerName, position);
-
     }
 
     //クリアボタン処理
