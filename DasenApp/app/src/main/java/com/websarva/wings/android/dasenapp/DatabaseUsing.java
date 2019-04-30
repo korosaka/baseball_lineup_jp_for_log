@@ -32,28 +32,28 @@ public class DatabaseUsing {
 
         int players = 9;
         switch (k) {
-            case 1:
+            case FixedWords.DEFAULT:
                 players = 9;
                 break;
-            case 2:
+            case FixedWords.DH:
                 players = 10;
                 break;
-            case 3:
+            case FixedWords.ALL10:
                 players = 10;
                 break;
-            case 4:
+            case FixedWords.ALL11:
                 players = 11;
                 break;
-            case 5:
+            case FixedWords.ALL12:
                 players = 12;
                 break;
-            case 6:
+            case FixedWords.ALL13:
                 players = 13;
                 break;
-            case 7:
+            case FixedWords.ALL14:
                 players = 14;
                 break;
-            case 8:
+            case FixedWords.ALL15:
                 players = 15;
                 break;
         }
