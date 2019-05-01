@@ -127,35 +127,35 @@ public class DatabaseUsing {
      */
     private void setPlayerCachedInfo(int version, int num, String name, String position) {
         switch (version) {
-            case 1:
+            case FixedWords.DEFAULT:
                 CachedPlayerNamesInfo.instance.setNameNormal(num, name);
                 CachedPlayerPositionsInfo.instance.setPositionNormal(num, position);
                 break;
-            case 2:
+            case FixedWords.DH:
                 CachedPlayerNamesInfo.instance.setNameDh(num, name);
                 CachedPlayerPositionsInfo.instance.setPositionDh(num, position);
                 break;
-            case 3:
+            case FixedWords.ALL10:
                 CachedPlayerNamesInfo.instance.setNameAll10(num, name);
                 CachedPlayerPositionsInfo.instance.setPositionAll10(num, position);
                 break;
-            case 4:
+            case FixedWords.ALL11:
                 CachedPlayerNamesInfo.instance.setNameAll11(num, name);
                 CachedPlayerPositionsInfo.instance.setPositionAll11(num, position);
                 break;
-            case 5:
+            case FixedWords.ALL12:
                 CachedPlayerNamesInfo.instance.setNameAll12(num, name);
                 CachedPlayerPositionsInfo.instance.setPositionAll12(num, position);
                 break;
-            case 6:
+            case FixedWords.ALL13:
                 CachedPlayerNamesInfo.instance.setNameAll13(num, name);
                 CachedPlayerPositionsInfo.instance.setPositionAll13(num, position);
                 break;
-            case 7:
+            case FixedWords.ALL14:
                 CachedPlayerNamesInfo.instance.setNameAll14(num, name);
                 CachedPlayerPositionsInfo.instance.setPositionAll14(num, position);
                 break;
-            case 8:
+            case FixedWords.ALL15:
                 CachedPlayerNamesInfo.instance.setNameAll15(num, name);
                 CachedPlayerPositionsInfo.instance.setPositionAll15(num, position);
                 break;

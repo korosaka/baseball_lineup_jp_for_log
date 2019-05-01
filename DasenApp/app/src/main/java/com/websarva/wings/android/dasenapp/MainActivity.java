@@ -2,13 +2,10 @@ package com.websarva.wings.android.dasenapp;
 
 import android.content.Context;
 import android.content.Intent;
-import android.database.sqlite.SQLiteDatabase;
-import android.database.sqlite.SQLiteStatement;
-import android.graphics.Color;
 import android.os.Bundle;
+import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AppCompatActivity;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
@@ -60,14 +57,13 @@ public class MainActivity extends AppCompatActivity {
     String[] names;
     String[] positions;
 
-    // 打順ボタン
-    Button[] number_buttons = new Button[9];
 
     int firstClicked = -1;
     private DatabaseUsing databaseUsing;
     private NormalLineupFragment normalLineupFragment;
     private DhLineupFragment dhLineupFragment;
 
+    private Fragment currentFragment;
 
     //ここからmain
     @Override
@@ -104,6 +100,7 @@ public class MainActivity extends AppCompatActivity {
         replace = findViewById(R.id.replace);
         clear = findViewById(R.id.clear);
         spinner = findViewById(R.id.position);
+        title = findViewById(R.id.title);
     }
 
     private void setEdit() {
@@ -137,6 +134,8 @@ public class MainActivity extends AppCompatActivity {
         transaction.show(normalLineupFragment);
         transaction.hide(dhLineupFragment);
         transaction.commit();
+
+        currentFragment = normalLineupFragment;
     }
 
     //以下１〜９番の打順ボタン処理⬇
@@ -203,7 +202,7 @@ public class MainActivity extends AppCompatActivity {
             // 2つめ選択時
             if (j == firstClicked) {
                 // 同じボタンがクリックされた →　元に戻す
-                setButtonDefault(j);
+                cancelFirstClick(j);
             } else {
                 // 異なるボタン →入れ替え処理
                 // DB/Layout内で入れ替え
@@ -214,79 +213,71 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void selectFirstReplacing(int num) {
-        number_buttons[num].setTextColor(Color.parseColor("#FF0000"));
+        changeButtonColor(num);
         firstClicked = num;
         isFirstReplaceClicked = true;
     }
 
-    private void setButtonDefault(int num) {
-        number_buttons[num].setTextColor(Color.parseColor("#000000"));
+    private void cancelFirstClick(int num) {
+        setButtonDefault(num);
         isFirstReplaceClicked = false;
         firstClicked = -1;
     }
 
     public void replacing2players(int firstSelected, int secondSelected) {
 
-        // DBで変更処理
-        DatabaseHelper helper = new DatabaseHelper(MainActivity.this);
-        SQLiteDatabase db = helper.getWritableDatabase();
-        try {
-            // 最初に選択した登録情報を消去
-            String sqlDelete = "DELETE FROM batting WHERE number = ?";
-            SQLiteStatement stmt = db.compileStatement(sqlDelete);
-            stmt.bindLong(1, numbers[firstSelected + k]);
-            stmt.executeUpdateDelete();
-            //そこに2番目に選択した登録情報を登録
-            String sqlInsert = "INSERT INTO batting(_id, number, playername, position) VALUES(?,?,?,?)";
-            stmt = db.compileStatement(sqlInsert);
-            stmt.bindLong(2, numbers[firstSelected + k]);
-            stmt.bindString(3, names[secondSelected + k]);
-            stmt.bindString(4, positions[secondSelected + k]);
-            stmt.executeInsert();
+        // 最初に選択した選手のところに後から選択した選手を上書き
+        databaseUsing.setDatabaseInfo(firstSelected, CachedPlayerNamesInfo.instance.getAppropriateName(secondSelected)
+                , CachedPlayerPositionsInfo.instance.getAppropriatePosition(secondSelected));
 
-            // 逆の処理
-            // 最初に選択した登録情報を消去
-            stmt = db.compileStatement(sqlDelete);
-            stmt.bindLong(1, numbers[secondSelected + k]);
-            stmt.executeUpdateDelete();
-            //そこに2番目に選択した登録情報を登録
-            stmt = db.compileStatement(sqlInsert);
-            stmt.bindLong(2, numbers[secondSelected + k]);
-            stmt.bindString(3, names[firstSelected + k]);
-            stmt.bindString(4, positions[firstSelected + k]);
-            stmt.executeInsert();
+        // 後に選択した選手の場所に最初の選手を登録
+        databaseUsing.setDatabaseInfo(secondSelected, CachedPlayerNamesInfo.instance.getAppropriateName(firstSelected)
+                , CachedPlayerPositionsInfo.instance.getAppropriatePosition(firstSelected));
 
-        } catch (Exception e) {
-            Log.d("error", "例外発生");
-        } finally {
-            db.close();
+        // キャッシュデータもデータベースの内容に合わせる(入れ替え後のデータに更新する)
+        databaseUsing.getDatabaseInfo(CurrentOrderVersion.instance.getCurrentVersion(), firstSelected);
+        databaseUsing.getDatabaseInfo(CurrentOrderVersion.instance.getCurrentVersion(), secondSelected);
+
+        // TextViewも更新
+        changeText(firstSelected, secondSelected);
+    }
+
+    private void changeText(int firstSelected, int secondSelected) {
+        switch (CurrentOrderVersion.instance.getCurrentVersion()) {
+            case FixedWords.DEFAULT:
+                normalLineupFragment.changeData(firstSelected, CachedPlayerNamesInfo.instance.getAppropriateName(firstSelected)
+                        , CachedPlayerPositionsInfo.instance.getAppropriatePosition(firstSelected));
+                normalLineupFragment.changeData(secondSelected, CachedPlayerNamesInfo.instance.getAppropriateName(secondSelected)
+                        , CachedPlayerPositionsInfo.instance.getAppropriatePosition(secondSelected));
+                break;
+            case FixedWords.DH:
+                dhLineupFragment.changeData(firstSelected, CachedPlayerNamesInfo.instance.getAppropriateName(firstSelected)
+                        , CachedPlayerPositionsInfo.instance.getAppropriatePosition(firstSelected));
+                dhLineupFragment.changeData(secondSelected, CachedPlayerNamesInfo.instance.getAppropriateName(secondSelected)
+                        , CachedPlayerPositionsInfo.instance.getAppropriatePosition(secondSelected));
+                break;
+            case FixedWords.ALL10:
+                break;
+            case FixedWords.ALL11:
+                break;
+            case FixedWords.ALL12:
+                break;
+            case FixedWords.ALL13:
+                break;
+            case FixedWords.ALL14:
+                break;
+            case FixedWords.ALL15:
+                break;
         }
 
-        // レイアウトに反映
-        name_tv[firstSelected].setText(names[secondSelected + k]);
-        position_tv[firstSelected].setText(positions[secondSelected + k]);
-
-        name_tv[secondSelected].setText(names[firstSelected + k]);
-        position_tv[secondSelected].setText(positions[firstSelected + k]);
-
-        // 最後に内部データを入れ替えとく
-        String name_box = names[firstSelected + k];
-        names[firstSelected + k] = names[secondSelected + k];
-        names[secondSelected + k] = name_box;
-
-        String position_box = positions[firstSelected + k];
-        positions[firstSelected + k] = positions[secondSelected + k];
-        positions[secondSelected + k] = position_box;
     }
 
     private void putSettingBack() {
         // 色々戻す
 
         replace.setEnabled(false);
-        number_buttons[firstClicked].setTextColor(Color.parseColor("#000000"));
+        cancelFirstClick(firstClicked);
         isReplacing = false;
-        isFirstReplaceClicked = false;
-        firstClicked = -1;
         replace.setEnabled(true);
         cancel.setEnabled(false);
         if (k == 0) title.setText(R.string.title);
@@ -295,20 +286,8 @@ public class MainActivity extends AppCompatActivity {
 
     private void selectNum(int num) {
 
-        String position = FixedWords.EMPTY;
-        String playerName = FixedWords.EMPTY;
-
-        switch (CurrentOrderVersion.instance.getCurrentVersion()) {
-            case FixedWords.DEFAULT:
-                position = CachedPlayerPositionsInfo.instance.getPositionNormal(num);
-                playerName = CachedPlayerNamesInfo.instance.getNameNormal(num);
-                break;
-            case FixedWords.DH:
-                position = CachedPlayerPositionsInfo.instance.getPositionDh(num);
-                playerName = CachedPlayerNamesInfo.instance.getNameDh(num);
-                break;
-        }
-        readyInputtingName(num, position, playerName);
+        readyInputtingName(num, CachedPlayerPositionsInfo.instance.getAppropriatePosition(num)
+                , CachedPlayerNamesInfo.instance.getAppropriateName(num));
         i = num;
     }
 
@@ -343,7 +322,7 @@ public class MainActivity extends AppCompatActivity {
         clear.setEnabled(true);
         replace.setEnabled(false);
 
-        // DH制の投手の場合のみ特殊
+        // DH制の投手の場合のみ対応
         if (CurrentOrderVersion.instance.getCurrentVersion() == FixedWords.DH && num == 9) {
             tvSelectNum.setText("P");
             setSpinner(spinner, "----");
@@ -407,22 +386,14 @@ public class MainActivity extends AppCompatActivity {
 
         if (isReplacing) {
             // ボタン色戻し
-            if (isFirstReplaceClicked) {
-                number_buttons[firstClicked].setTextColor(Color.parseColor("#000000"));
-            }
-
+            if (isFirstReplaceClicked) cancelFirstClick(firstClicked);
             //入れ替えボタン戻し
             replace.setEnabled(true);
             //入れ替えフラグ戻し
             isReplacing = false;
-            isFirstReplaceClicked = false;
-            firstClicked = -1;
-
-        } else {
-            //それぞれ初期状態に戻す
-            setLayoutDefault();
         }
-
+        //それぞれ初期状態に戻す
+        setLayoutDefault();
     }
 
     // 入れ替えボタン処理
@@ -467,14 +438,16 @@ public class MainActivity extends AppCompatActivity {
                 transaction.show(normalLineupFragment);
                 transaction.commit();
                 CurrentOrderVersion.instance.setCurrentVersion(FixedWords.DEFAULT);
+                currentFragment = normalLineupFragment;
                 break;
-            //サブオーダーの場合
-            case R.id.subOder:
+            //DHの場合
+            case R.id.dh:
                 transaction.hide(normalLineupFragment);
                 transaction.show(dhLineupFragment);
                 transaction.commit();
                 CurrentOrderVersion.instance.setCurrentVersion(FixedWords.DH);
                 spinnerResource = getResources().getStringArray(R.array.positions_dh);
+                currentFragment = dhLineupFragment;
                 break;
             case R.id.field:
                 //遷移先に送るデータ（各守備位置・名前）
@@ -493,7 +466,7 @@ public class MainActivity extends AppCompatActivity {
                 break;
         }
 
-        ArrayAdapter<String> adapter = new ArrayAdapter<>(this,android.R.layout.simple_spinner_item,spinnerResource);
+        ArrayAdapter<String> adapter = new ArrayAdapter<>(this, android.R.layout.simple_spinner_item, spinnerResource);
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         spinner.setAdapter(adapter);
 
@@ -501,15 +474,59 @@ public class MainActivity extends AppCompatActivity {
         setLayoutDefault();
 
         if (isFirstReplaceClicked) {
-            number_buttons[firstClicked].setTextColor(Color.parseColor("#000000"));
+            cancelFirstClick(firstClicked);
         }
 
         isReplacing = false;
-        isFirstReplaceClicked = false;
-        firstClicked = -1;
 
         //親クラス同名メソッドで戻り値返却
         return super.onOptionsItemSelected(item);
+    }
+
+    private void changeButtonColor(int num) {
+        switch (CurrentOrderVersion.instance.getCurrentVersion()) {
+            case FixedWords.DEFAULT:
+                normalLineupFragment.changeButtonColor(num);
+                break;
+            case FixedWords.DH:
+                dhLineupFragment.changeButtonColor(num);
+                break;
+            case FixedWords.ALL10:
+                break;
+            case FixedWords.ALL11:
+                break;
+            case FixedWords.ALL12:
+                break;
+            case FixedWords.ALL13:
+                break;
+            case FixedWords.ALL14:
+                break;
+            case FixedWords.ALL15:
+                break;
+        }
+    }
+
+    private void setButtonDefault(int num) {
+        switch (CurrentOrderVersion.instance.getCurrentVersion()) {
+            case FixedWords.DEFAULT:
+                normalLineupFragment.setButtonDefault(num);
+                break;
+            case FixedWords.DH:
+                dhLineupFragment.setButtonDefault(num);
+                break;
+            case FixedWords.ALL10:
+                break;
+            case FixedWords.ALL11:
+                break;
+            case FixedWords.ALL12:
+                break;
+            case FixedWords.ALL13:
+                break;
+            case FixedWords.ALL14:
+                break;
+            case FixedWords.ALL15:
+                break;
+        }
     }
 
 }

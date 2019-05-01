@@ -80,4 +80,27 @@ public class CachedPlayerPositionsInfo {
         return positionsOfAll15[i];
     }
 
+    public String getAppropriatePosition(int i) {
+        switch (CurrentOrderVersion.instance.getCurrentVersion()) {
+            case FixedWords.DEFAULT:
+                return getPositionNormal(i);
+            case FixedWords.DH:
+                return getPositionDh(i);
+            case FixedWords.ALL10:
+                return getPositionAll10(i);
+            case FixedWords.ALL11:
+                return getPositionAll11(i);
+            case FixedWords.ALL12:
+                return getPositionAll12(i);
+            case FixedWords.ALL13:
+                return getPositionAll13(i);
+            case FixedWords.ALL14:
+                return getPositionAll14(i);
+            case FixedWords.ALL15:
+                return getPositionAll15(i);
+        }
+        return FixedWords.EMPTY;
+    }
+
+
 }

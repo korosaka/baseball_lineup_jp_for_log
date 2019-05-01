@@ -1,16 +1,21 @@
 package com.websarva.wings.android.dasenapp;
 
+import android.graphics.Color;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.TextView;
 
 public class NormalLineupFragment extends Fragment {
 
     private TextView[] names = new TextView[9];
     private TextView[] positions = new TextView[9];
+    // 打順ボタン
+    private Button[] number_buttons = new Button[9];
+
 
     public static NormalLineupFragment newInstance() {
 
@@ -51,6 +56,16 @@ public class NormalLineupFragment extends Fragment {
         positions[6] = v.findViewById(R.id.position7_normal);
         positions[7] = v.findViewById(R.id.position8_normal);
         positions[8] = v.findViewById(R.id.position9_normal);
+
+        number_buttons[0] = v.findViewById(R.id.btn1_normal);
+        number_buttons[1] = v.findViewById(R.id.btn2_normal);
+        number_buttons[2] = v.findViewById(R.id.btn3_normal);
+        number_buttons[3] = v.findViewById(R.id.btn4_normal);
+        number_buttons[4] = v.findViewById(R.id.btn5_normal);
+        number_buttons[5] = v.findViewById(R.id.btn6_normal);
+        number_buttons[6] = v.findViewById(R.id.btn7_normal);
+        number_buttons[7] = v.findViewById(R.id.btn8_normal);
+        number_buttons[8] = v.findViewById(R.id.btn9_normal);
     }
 
     private void setLayout() {
@@ -63,5 +78,13 @@ public class NormalLineupFragment extends Fragment {
     public void changeData(int num, String name, String position) {
         names[num].setText(name);
         positions[num].setText(position);
+    }
+
+    public void changeButtonColor(int num) {
+        number_buttons[num].setTextColor(Color.parseColor("#FF0000"));
+    }
+
+    public void setButtonDefault(int num) {
+        number_buttons[num].setTextColor(Color.parseColor("#000000"));
     }
 }

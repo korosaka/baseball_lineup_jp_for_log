@@ -80,4 +80,26 @@ public class CachedPlayerNamesInfo {
         return namesOfAll15[i];
     }
 
+    public String getAppropriateName(int i) {
+        switch (CurrentOrderVersion.instance.getCurrentVersion()) {
+            case FixedWords.DEFAULT:
+                return getNameNormal(i);
+            case FixedWords.DH:
+                return getNameDh(i);
+            case FixedWords.ALL10:
+                return getNameAll10(i);
+            case FixedWords.ALL11:
+                return getNameAll11(i);
+            case FixedWords.ALL12:
+                return getNameAll12(i);
+            case FixedWords.ALL13:
+                return getNameAll13(i);
+            case FixedWords.ALL14:
+                return getNameAll14(i);
+            case FixedWords.ALL15:
+                return getNameAll15(i);
+        }
+        return FixedWords.EMPTY;
+    }
+
 }

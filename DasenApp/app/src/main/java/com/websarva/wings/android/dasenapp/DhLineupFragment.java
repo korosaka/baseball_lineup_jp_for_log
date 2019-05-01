@@ -1,16 +1,19 @@
 package com.websarva.wings.android.dasenapp;
 
+import android.graphics.Color;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.TextView;
 
 public class DhLineupFragment extends Fragment {
 
     private TextView[] names = new TextView[10];
     private TextView[] positions = new TextView[9];
+    private Button[] number_buttons = new Button[10];
 
     public static DhLineupFragment newInstance() {
         return new DhLineupFragment();
@@ -51,6 +54,17 @@ public class DhLineupFragment extends Fragment {
         positions[6] = v.findViewById(R.id.position7_dh);
         positions[7] = v.findViewById(R.id.position8_dh);
         positions[8] = v.findViewById(R.id.position9_dh);
+
+        number_buttons[0] = v.findViewById(R.id.btn1_dh);
+        number_buttons[1] = v.findViewById(R.id.btn2_dh);
+        number_buttons[2] = v.findViewById(R.id.btn3_dh);
+        number_buttons[3] = v.findViewById(R.id.btn4_dh);
+        number_buttons[4] = v.findViewById(R.id.btn5_dh);
+        number_buttons[5] = v.findViewById(R.id.btn6_dh);
+        number_buttons[6] = v.findViewById(R.id.btn7_dh);
+        number_buttons[7] = v.findViewById(R.id.btn8_dh);
+        number_buttons[8] = v.findViewById(R.id.btn9_dh);
+        number_buttons[9] = v.findViewById(R.id.btnP_dh);
     }
 
     private void setLayout() {
@@ -65,6 +79,13 @@ public class DhLineupFragment extends Fragment {
         names[num].setText(name);
         if (num == 9) return;
         positions[num].setText(position);
+    }
+    public void changeButtonColor(int num) {
+        number_buttons[num].setTextColor(Color.parseColor("#FF0000"));
+    }
+
+    public void setButtonDefault(int num) {
+        number_buttons[num].setTextColor(Color.parseColor("#000000"));
     }
 
 
