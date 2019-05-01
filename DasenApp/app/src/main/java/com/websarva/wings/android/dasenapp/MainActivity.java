@@ -418,27 +418,10 @@ public class MainActivity extends AppCompatActivity {
             isFirstReplaceClicked = false;
             firstClicked = -1;
 
-            if (k == 0) {
-                title.setText(R.string.title);
-            } else {
-                title.setText(R.string.subtitle);
-            }
-
-
         } else {
             //それぞれ初期状態に戻す
-            tvSelectNum.setText(getString(R.string.current_num));
-            etName.setText("");
-            spinner.setSelection(0);
-            etName.setFocusable(false);
-            etName.setFocusableInTouchMode(false);
-            etName.setEnabled(false);
-            record.setEnabled(false);
-            cancel.setEnabled(false);
-            clear.setEnabled(false);
-            replace.setEnabled(true);
+            setLayoutDefault();
         }
-
 
     }
 
@@ -515,21 +498,12 @@ public class MainActivity extends AppCompatActivity {
         spinner.setAdapter(adapter);
 
         //上部入力欄初期状態へ
-        tvSelectNum.setText(getString(R.string.current_num));
-        etName.setText("");
-        spinner.setSelection(0);
-        etName.setFocusable(false);
-        etName.setFocusableInTouchMode(false);
-        etName.setEnabled(false);
-        record.setEnabled(false);
-        cancel.setEnabled(false);
-        clear.setEnabled(false);
+        setLayoutDefault();
 
         if (isFirstReplaceClicked) {
             number_buttons[firstClicked].setTextColor(Color.parseColor("#000000"));
         }
 
-        replace.setEnabled(true);
         isReplacing = false;
         isFirstReplaceClicked = false;
         firstClicked = -1;
@@ -537,6 +511,5 @@ public class MainActivity extends AppCompatActivity {
         //親クラス同名メソッドで戻り値返却
         return super.onOptionsItemSelected(item);
     }
-
 
 }
