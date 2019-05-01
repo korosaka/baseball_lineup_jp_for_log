@@ -14,6 +14,7 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.inputmethod.InputMethodManager;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Spinner;
@@ -175,6 +176,11 @@ public class MainActivity extends AppCompatActivity {
         commonMethod(8);
     }
 
+    public void onClickP(View view) {
+        commonMethod(9);
+    }
+
+
     //打順ボタン共通メソッド（打順・登録状態表示、EditText・登録/クリアボタンの有効化、データベース用の数字登録）
     public void commonMethod(int j) {
         // 入れ替え時のクリックと処理区別
@@ -186,6 +192,7 @@ public class MainActivity extends AppCompatActivity {
             selectNum(j);
         }
     }
+
 
     private void replaceMethod(int j) {
         // 入れ替え時
@@ -319,6 +326,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void readyInputtingName(int num, String position, String name) {
+        spinner.setEnabled(true);
         //numbersは表示打順のためkを反映させない
         String number = String.valueOf(num + 1) + "番";
         tvSelectNum.setText(number);
@@ -334,6 +342,13 @@ public class MainActivity extends AppCompatActivity {
         cancel.setEnabled(true);
         clear.setEnabled(true);
         replace.setEnabled(false);
+
+        // DH制の投手の場合のみ特殊
+        if (CurrentOrderVersion.instance.getCurrentVersion() == FixedWords.DH && num == 9) {
+            tvSelectNum.setText("P");
+            setSpinner(spinner, "----");
+            spinner.setEnabled(false);
+        }
     }
 
     //登録ボタン押した処理
@@ -459,6 +474,7 @@ public class MainActivity extends AppCompatActivity {
         //選択されたオプションメニューのID取得
         int itemId = item.getItemId();
         FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
+        String[] spinnerResource = getResources().getStringArray(R.array.positions);
 
         //IDのR値による処理分岐
         switch (itemId) {
@@ -475,6 +491,7 @@ public class MainActivity extends AppCompatActivity {
                 transaction.show(dhLineupFragment);
                 transaction.commit();
                 CurrentOrderVersion.instance.setCurrentVersion(FixedWords.DH);
+                spinnerResource = getResources().getStringArray(R.array.positions_dh);
                 break;
             case R.id.field:
                 //遷移先に送るデータ（各守備位置・名前）
@@ -492,6 +509,10 @@ public class MainActivity extends AppCompatActivity {
                 startActivity(intent);
                 break;
         }
+
+        ArrayAdapter<String> adapter = new ArrayAdapter<>(this,android.R.layout.simple_spinner_item,spinnerResource);
+        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        spinner.setAdapter(adapter);
 
         //上部入力欄初期状態へ
         tvSelectNum.setText(getString(R.string.current_num));

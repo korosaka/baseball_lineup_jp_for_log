@@ -10,7 +10,7 @@ import android.widget.TextView;
 public class DhLineupFragment extends Fragment {
 
     private TextView[] names = new TextView[10];
-    private TextView[] positions = new TextView[10];
+    private TextView[] positions = new TextView[9];
 
     public static DhLineupFragment newInstance() {
         return new DhLineupFragment();
@@ -51,18 +51,19 @@ public class DhLineupFragment extends Fragment {
         positions[6] = v.findViewById(R.id.position7_dh);
         positions[7] = v.findViewById(R.id.position8_dh);
         positions[8] = v.findViewById(R.id.position9_dh);
-        positions[9] = v.findViewById(R.id.positionP_dh);
     }
 
     private void setLayout() {
-        for (int i = 0; i < 10; i++) {
+        for (int i = 0; i < 9; i++) {
             names[i].setText(CachedPlayerNamesInfo.instance.getNameDh(i));
             positions[i].setText(CachedPlayerPositionsInfo.instance.getPositionDh(i));
         }
+        names[9].setText(CachedPlayerNamesInfo.instance.getNameDh(9));
     }
 
     public void changeData(int num, String name, String position) {
         names[num].setText(name);
+        if (num == 9) return;
         positions[num].setText(position);
     }
 

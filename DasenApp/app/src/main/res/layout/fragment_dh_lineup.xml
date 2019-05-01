@@ -377,6 +377,7 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_marginTop="5dp"
             android:layout_marginBottom="10dp"
             android:gravity="center_vertical"
             android:orientation="horizontal">
@@ -387,7 +388,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:background="@drawable/button_custom"
-                android:onClick="onClick9"
+                android:onClick="onClickP"
                 android:text="@string/pitcher"
                 android:textSize="18sp"
                 android:textStyle="bold" />
@@ -399,7 +400,7 @@
                 android:layout_marginLeft="10dp"
                 android:layout_marginRight="10dp"
                 android:text="@string/pitcher_text"
-                android:textColor="@android:color/holo_green_dark"
+                android:textColor="#ff0066"
                 android:textSize="28sp"
                 android:textStyle="bold" />
 
