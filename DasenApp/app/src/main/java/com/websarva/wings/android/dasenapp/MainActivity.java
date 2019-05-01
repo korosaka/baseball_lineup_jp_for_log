@@ -3,7 +3,6 @@ package com.websarva.wings.android.dasenapp;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AppCompatActivity;
 import android.view.Menu;
@@ -39,31 +38,17 @@ public class MainActivity extends AppCompatActivity {
     Boolean isFirstReplaceClicked = false;
     //スタメンタイトル
     TextView title;
-    //各打順の数字配列
-    int numbers[] = new int[19];
     //グローバル変数i（データベースへの登録・検索で使う）
-    int i = 0;
-    //サブオーダー選択時に+10される
-    int k = 0;
-    //各打順の名前
-    TextView[] name_tv = new TextView[9];
+    int currentNum = 0;
     //スピナーオブジェクト
     Spinner spinner;
     //クリアボタン（現在上部に入力中のものを未入力状態に戻す（選択打順も））
     Button clear;
-    //各打順のポジション
-    TextView[] position_tv = new TextView[9];
-    //各打順の名前,ポジション用配列
-    String[] names;
-    String[] positions;
-
 
     int firstClicked = -1;
     private DatabaseUsing databaseUsing;
     private NormalLineupFragment normalLineupFragment;
     private DhLineupFragment dhLineupFragment;
-
-    private Fragment currentFragment;
 
     //ここからmain
     @Override
@@ -134,8 +119,6 @@ public class MainActivity extends AppCompatActivity {
         transaction.show(normalLineupFragment);
         transaction.hide(dhLineupFragment);
         transaction.commit();
-
-        currentFragment = normalLineupFragment;
     }
 
     //以下１〜９番の打順ボタン処理⬇
@@ -280,15 +263,13 @@ public class MainActivity extends AppCompatActivity {
         isReplacing = false;
         replace.setEnabled(true);
         cancel.setEnabled(false);
-        if (k == 0) title.setText(R.string.title);
-        else title.setText(R.string.subtitle);
     }
 
     private void selectNum(int num) {
 
         readyInputtingName(num, CachedPlayerPositionsInfo.instance.getAppropriatePosition(num)
                 , CachedPlayerNamesInfo.instance.getAppropriateName(num));
-        i = num;
+        currentNum = num;
     }
 
     //文字列からスピナーをセットするメソッド（上記メソッドで使用）
@@ -338,19 +319,19 @@ public class MainActivity extends AppCompatActivity {
         //ポジション取得
         String position = (String) spinner.getSelectedItem();
 
-        databaseUsing.setDatabaseInfo(i, playerName, position);
+        databaseUsing.setDatabaseInfo(currentNum, playerName, position);
 
         switch (CurrentOrderVersion.instance.getCurrentVersion()) {
             //画面のメンバー表に反映（１〜９番まで）
             case FixedWords.DEFAULT:
-                normalLineupFragment.changeData(i, playerName, position);
-                CachedPlayerNamesInfo.instance.setNameNormal(i, playerName);
-                CachedPlayerPositionsInfo.instance.setPositionNormal(i, position);
+                normalLineupFragment.changeData(currentNum, playerName, position);
+                CachedPlayerNamesInfo.instance.setNameNormal(currentNum, playerName);
+                CachedPlayerPositionsInfo.instance.setPositionNormal(currentNum, position);
                 break;
             case FixedWords.DH:
-                dhLineupFragment.changeData(i, playerName, position);
-                CachedPlayerNamesInfo.instance.setNameDh(i, playerName);
-                CachedPlayerPositionsInfo.instance.setPositionDh(i, position);
+                dhLineupFragment.changeData(currentNum, playerName, position);
+                CachedPlayerNamesInfo.instance.setNameDh(currentNum, playerName);
+                CachedPlayerPositionsInfo.instance.setPositionDh(currentNum, position);
                 break;
         }
 
@@ -438,7 +419,6 @@ public class MainActivity extends AppCompatActivity {
                 transaction.show(normalLineupFragment);
                 transaction.commit();
                 CurrentOrderVersion.instance.setCurrentVersion(FixedWords.DEFAULT);
-                currentFragment = normalLineupFragment;
                 break;
             //DHの場合
             case R.id.dh:
@@ -447,7 +427,6 @@ public class MainActivity extends AppCompatActivity {
                 transaction.commit();
                 CurrentOrderVersion.instance.setCurrentVersion(FixedWords.DH);
                 spinnerResource = getResources().getStringArray(R.array.positions_dh);
-                currentFragment = dhLineupFragment;
                 break;
             case R.id.field:
                 //遷移先に送るデータ（各守備位置・名前）
@@ -455,8 +434,6 @@ public class MainActivity extends AppCompatActivity {
                 String[] nameIntent = new String[9];
                 //送るデータ（9人分）を抽出（正規orサブ）
                 for (int i = 0; i < 9; i++) {
-                    positionIntent[i] = positions[i + k];
-                    nameIntent[i] = names[i + k];
                 }
                 //フィールド画面へ
                 Intent intent = new Intent(MainActivity.this, FieldActivity.class);
