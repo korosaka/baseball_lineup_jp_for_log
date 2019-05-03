@@ -263,7 +263,8 @@ public class MainActivity extends AppCompatActivity {
         isReplacing = false;
         replace.setEnabled(true);
         cancel.setEnabled(false);
-        if (CurrentOrderVersion.instance.getCurrentVersion() == FixedWords.DH) dhLineupFragment.setPitcherButtonEnable(true);
+        if (CurrentOrderVersion.instance.getCurrentVersion() == FixedWords.DH)
+            dhLineupFragment.setPitcherButtonEnable(true);
     }
 
     private void selectNum(int num) {
@@ -351,7 +352,8 @@ public class MainActivity extends AppCompatActivity {
         cancel.setEnabled(false);
         clear.setEnabled(false);
         replace.setEnabled(true);
-        if (CurrentOrderVersion.instance.getCurrentVersion() == FixedWords.DH) dhLineupFragment.setPitcherButtonEnable(true);
+        if (CurrentOrderVersion.instance.getCurrentVersion() == FixedWords.DH)
+            dhLineupFragment.setPitcherButtonEnable(true);
     }
 
     //クリアボタン処理
@@ -382,7 +384,8 @@ public class MainActivity extends AppCompatActivity {
     // 入れ替えボタン処理
     public void onClickReplace(View view) {
 
-        if (CurrentOrderVersion.instance.getCurrentVersion() == FixedWords.DH) dhLineupFragment.setPitcherButtonEnable(false);
+        if (CurrentOrderVersion.instance.getCurrentVersion() == FixedWords.DH)
+            dhLineupFragment.setPitcherButtonEnable(false);
         // 入れ替えクリックされているフラグ
         isReplacing = true;
         // 入れ替えボタンはenable(false)に
@@ -392,6 +395,13 @@ public class MainActivity extends AppCompatActivity {
         // タイトルが『２つボタンクリック』になる
         title.setText(R.string.replace_title);
 
+    }
+
+    public void onClickField(View view) {
+        startActivity(new Intent(MainActivity.this, FieldActivity.class));
+
+        setLayoutDefault();
+        checkReplacing();
     }
 
 
@@ -431,27 +441,27 @@ public class MainActivity extends AppCompatActivity {
                 CurrentOrderVersion.instance.setCurrentVersion(FixedWords.DH);
                 spinnerResource = getResources().getStringArray(R.array.positions_dh);
                 break;
-            case R.id.field:
-                //フィールド画面へ
-                startActivity(new Intent(MainActivity.this, FieldActivity.class));
-                break;
         }
 
         ArrayAdapter<String> adapter = new ArrayAdapter<>(this, android.R.layout.simple_spinner_item, spinnerResource);
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         spinner.setAdapter(adapter);
 
-        //上部入力欄初期状態へ
         setLayoutDefault();
-
-        if (isFirstReplaceClicked) {
-            cancelFirstClick(firstClicked);
-        }
-
-        isReplacing = false;
+        checkReplacing();
 
         //親クラス同名メソッドで戻り値返却
         return super.onOptionsItemSelected(item);
+    }
+
+    /**
+     * 入れ替え処理中ならリセット
+     */
+    private void checkReplacing() {
+        if (isReplacing) {
+            if (isFirstReplaceClicked) cancelFirstClick(firstClicked);
+            isReplacing = false;
+        }
     }
 
     private void changeButtonColor(int num) {

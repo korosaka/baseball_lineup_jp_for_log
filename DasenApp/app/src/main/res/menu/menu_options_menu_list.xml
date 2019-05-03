@@ -9,8 +9,4 @@
         android:id="@+id/dh"
         app:showAsAction="never"
         android:title="@string/subOrder" />
-    <item
-        android:id="@+id/field"
-        app:showAsAction="never"
-        android:title="@string/field"/>
 </menu>

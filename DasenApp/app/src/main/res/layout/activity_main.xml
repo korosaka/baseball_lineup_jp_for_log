@@ -1,16 +1,16 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical"
-    android:background="#3CB371">
+    android:background="#3CB371"
+    android:orientation="vertical">
+
     <ScrollView
         android:id="@+id/scroll"
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        android:layout_weight="1.0"
-        android:layout_marginBottom="5dp">
+        android:layout_marginBottom="5dp"
+        android:layout_weight="1.0">
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -20,8 +20,8 @@
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:orientation="vertical"
-                android:background="#3CB371">
+                android:background="#3CB371"
+                android:orientation="vertical">
 
                 <LinearLayout
                     android:layout_width="match_parent"
@@ -49,10 +49,10 @@
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:layout_weight="1.0"
-                        android:textColor="#000000"
-                        android:textSize="24sp"
+                        android:maxLength="6"
                         android:maxLines="1"
-                        android:maxLength="6"/>
+                        android:textColor="#000000"
+                        android:textSize="24sp" />
 
                     <Button
                         android:id="@+id/clear"
@@ -83,14 +83,15 @@
                         android:id="@+id/record"
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
-                        android:layout_weight="1.0"
                         android:layout_marginLeft="5dp"
                         android:layout_marginRight="5dp"
+                        android:layout_weight="1.0"
                         android:enabled="false"
                         android:onClick="onClickSave"
                         android:text="@string/save"
                         android:textSize="18sp"
                         android:textStyle="bold" />
+
                     <Button
                         android:id="@+id/replace"
                         android:layout_width="wrap_content"
@@ -98,9 +99,7 @@
                         android:onClick="onClickReplace"
                         android:text="@string/replace"
                         android:textSize="18sp"
-                        android:textStyle="bold"
-                        />
-
+                        android:textStyle="bold" />
 
 
                 </LinearLayout>
@@ -133,17 +132,22 @@
 
             </FrameLayout>
 
+            <Button
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:onClick="onClickField"
+                android:text="@string/field"
+                android:textStyle="bold"/>
 
         </LinearLayout>
     </ScrollView>
-    <com.google.android.gms.ads.AdView
-        xmlns:ads="http://schemas.android.com/apk/res-auto"
+
+    <com.google.android.gms.ads.AdView xmlns:ads="http://schemas.android.com/apk/res-auto"
         android:id="@+id/adView"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         ads:adSize="BANNER"
-        ads:adUnitId="ca-app-pub-3940256099942544/6300978111">
-    </com.google.android.gms.ads.AdView>
+        ads:adUnitId="ca-app-pub-3940256099942544/6300978111"></com.google.android.gms.ads.AdView>
 
 
 </LinearLayout>
