@@ -58,13 +58,6 @@ public class DatabaseUsing {
                 break;
         }
 
-        // DH制の場合は10人分のデータ
-        int pitcher = 0;
-        if (k == 0) {
-            pitcher = 1;
-        }
-
-
         for (int j = 0; j < players; j++) {
             getDatabaseInfo(k, j);
         }
