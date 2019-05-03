@@ -263,6 +263,7 @@ public class MainActivity extends AppCompatActivity {
         isReplacing = false;
         replace.setEnabled(true);
         cancel.setEnabled(false);
+        if (CurrentOrderVersion.instance.getCurrentVersion() == FixedWords.DH) dhLineupFragment.setPitcherButtonEnable(true);
     }
 
     private void selectNum(int num) {
@@ -350,6 +351,7 @@ public class MainActivity extends AppCompatActivity {
         cancel.setEnabled(false);
         clear.setEnabled(false);
         replace.setEnabled(true);
+        if (CurrentOrderVersion.instance.getCurrentVersion() == FixedWords.DH) dhLineupFragment.setPitcherButtonEnable(true);
     }
 
     //クリアボタン処理
@@ -380,6 +382,7 @@ public class MainActivity extends AppCompatActivity {
     // 入れ替えボタン処理
     public void onClickReplace(View view) {
 
+        if (CurrentOrderVersion.instance.getCurrentVersion() == FixedWords.DH) dhLineupFragment.setPitcherButtonEnable(false);
         // 入れ替えクリックされているフラグ
         isReplacing = true;
         // 入れ替えボタンはenable(false)に

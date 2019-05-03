@@ -13,4 +13,6 @@ public class FixedWords {
     public static final int ALL14 = 7;
     public static final int ALL15 = 8;
 
+    public static final String PITCHER = "(投)" ;
+
 }

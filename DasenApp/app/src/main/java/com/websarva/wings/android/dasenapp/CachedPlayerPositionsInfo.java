@@ -20,6 +20,7 @@ public class CachedPlayerPositionsInfo {
 
     public void setPositionDh(int i, String name) {
         positionsOfDh[i] = name;
+        if (i == 9) positionsOfDh[i] = FixedWords.PITCHER;
     }
 
     public void setPositionAll10(int i, String name) {

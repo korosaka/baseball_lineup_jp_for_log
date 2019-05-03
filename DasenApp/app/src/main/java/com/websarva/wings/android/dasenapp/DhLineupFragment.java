@@ -80,6 +80,7 @@ public class DhLineupFragment extends Fragment {
         if (num == 9) return;
         positions[num].setText(position);
     }
+
     public void changeButtonColor(int num) {
         number_buttons[num].setTextColor(Color.parseColor("#FF0000"));
     }
@@ -88,5 +89,8 @@ public class DhLineupFragment extends Fragment {
         number_buttons[num].setTextColor(Color.parseColor("#000000"));
     }
 
+    public void setPitcherButtonEnable(boolean enable) {
+        number_buttons[9].setEnabled(enable);
+    }
 
 }
