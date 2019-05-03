@@ -89,7 +89,7 @@
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="0dp"
-                android:layout_weight="0.07" />
+                android:layout_weight="0.06" />
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -182,7 +182,7 @@
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="0dp"
-                android:layout_weight="0.08" />
+                android:layout_weight="0.1" />
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -197,7 +197,6 @@
                         android:id="@+id/dh4"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_marginLeft="5dp"
                         android:text="@string/unselected"
                         android:textColor="@android:color/black"
                         android:textSize="18sp"
@@ -213,7 +212,6 @@
                         android:id="@+id/dh1"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_marginRight="5dp"
                         android:text="@string/unselected"
                         android:textColor="@android:color/black"
                         android:textSize="18sp"
@@ -234,7 +232,6 @@
                         android:id="@+id/dh5"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_marginLeft="5dp"
                         android:text="@string/unselected"
                         android:textColor="@android:color/black"
                         android:textSize="18sp"
@@ -250,7 +247,6 @@
                         android:id="@+id/dh2"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_marginRight="5dp"
                         android:text="@string/unselected"
                         android:textColor="@android:color/black"
                         android:textSize="18sp"
@@ -271,7 +267,6 @@
                         android:id="@+id/dh6"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_marginLeft="5dp"
                         android:text="@string/unselected"
                         android:textColor="@android:color/black"
                         android:textSize="18sp"
@@ -287,7 +282,6 @@
                         android:id="@+id/dh3"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_marginRight="5dp"
                         android:text="@string/unselected"
                         android:textColor="@android:color/black"
                         android:textSize="18sp"
@@ -297,7 +291,7 @@
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="0dp"
-                android:layout_weight="0.08" />
+                android:layout_weight="0.04" />
             <TextView
                 android:id="@+id/catcher"
                 android:layout_width="wrap_content"

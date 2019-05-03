@@ -117,42 +117,52 @@ public class FieldActivity extends AppCompatActivity {
             switch (CachedPlayerPositionsInfo.instance.getAppropriatePosition(i)) {
                 case "(投)":
                     if (CurrentOrderVersion.instance.getCurrentVersion() == FixedWords.DH)
-                        position1.setText(CachedPlayerNamesInfo.instance.getAppropriateName(i) + " (P)");
+                        setText(position1, i, true);
                     else
-                        position1.setText(CachedPlayerNamesInfo.instance.getAppropriateName(i) + " (" + (i + 1) + ")");
+                        setText(position1, i, false);
                     break;
                 case "(捕)":
-                    position2.setText(CachedPlayerNamesInfo.instance.getAppropriateName(i) + " (" + (i + 1) + ")");
+                    setText(position2, i, false);
                     break;
                 case "(一)":
-                    position3.setText(CachedPlayerNamesInfo.instance.getAppropriateName(i) + " (" + (i + 1) + ")");
+                    setText(position3, i, false);
                     break;
                 case "(二)":
-                    position4.setText(CachedPlayerNamesInfo.instance.getAppropriateName(i) + " (" + (i + 1) + ")");
+                    setText(position4, i, false);
                     break;
                 case "(三)":
-                    position5.setText(CachedPlayerNamesInfo.instance.getAppropriateName(i) + " (" + (i + 1) + ")");
+                    setText(position5, i, false);
                     break;
                 case "(遊)":
-                    position6.setText(CachedPlayerNamesInfo.instance.getAppropriateName(i) + " (" + (i + 1) + ")");
+                    setText(position6, i, false);
                     break;
                 case "(左)":
-                    position7.setText(CachedPlayerNamesInfo.instance.getAppropriateName(i) + " (" + (i + 1) + ")");
+                    setText(position7, i, false);
                     break;
                 case "(中)":
-                    position8.setText(CachedPlayerNamesInfo.instance.getAppropriateName(i) + " (" + (i + 1) + ")");
+                    setText(position8, i, false);
                     break;
                 case "(右)":
-                    position9.setText(CachedPlayerNamesInfo.instance.getAppropriateName(i) + " (" + (i + 1) + ")");
+                    setText(position9, i, false);
                     break;
                 case "(DH)":
                     if (dhCount >= maxDh) dhCount = 0;
-                    dh[dhCount].setText(CachedPlayerNamesInfo.instance.getAppropriateName(i) + " (" + (i + 1) + ")");
+                    setText(dh[dhCount], i, false);
                     dhCount++;
                     break;
                 default:
                     break;
             }
         }
+    }
+
+    private void setText(TextView textView, int num, boolean dhPitcher) {
+        String playerName = CachedPlayerNamesInfo.instance.getAppropriateName(num);
+
+        if (dhPitcher) textView.setText(playerName + " (P)");
+        else textView.setText(playerName + " (" + (num + 1) + ")");
+
+        if (playerName.length() > 5) textView.setTextSize(16);
+        else textView.setTextSize(18);
     }
 }
