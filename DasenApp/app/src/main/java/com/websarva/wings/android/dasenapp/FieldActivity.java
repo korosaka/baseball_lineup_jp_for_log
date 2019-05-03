@@ -162,7 +162,7 @@ public class FieldActivity extends AppCompatActivity {
         if (dhPitcher) textView.setText(playerName + " (P)");
         else textView.setText(playerName + " (" + (num + 1) + ")");
 
-        if (playerName.length() > 5) textView.setTextSize(16);
-        else textView.setTextSize(18);
+        if (playerName.length() > 5) textView.setTextSize(14);
+        else textView.setTextSize(16);
     }
 }
