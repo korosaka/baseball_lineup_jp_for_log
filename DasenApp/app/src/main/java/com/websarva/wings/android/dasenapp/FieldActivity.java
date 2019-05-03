@@ -10,8 +10,6 @@ import com.google.android.gms.ads.AdView;
 import com.google.android.gms.ads.MobileAds;
 
 public class FieldActivity extends AppCompatActivity {
-    //広告ビュー
-    private AdView mAdView;
     //各ポジションのテキスト
     private TextView position1;
     private TextView position2;
@@ -24,18 +22,34 @@ public class FieldActivity extends AppCompatActivity {
     private TextView position9;
     private TextView[] dh = new TextView[6];
 
+    private int playerNumber = 0;
+    private int maxDh = 0;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_field);
+        setAdsense();
+        bindLayout();
+        setPlayerCount();
+        hideDh();
+        setPlayers();
+    }
 
+    //戻るボタン
+    public void onClickBack(View view) {
+        finish();
+    }
+
+    private void setAdsense() {
         //広告処理
         MobileAds.initialize(this, "ca-app-pub-6298264304843789~9524433477");
-        mAdView = findViewById(R.id.adView);
+        AdView mAdView = findViewById(R.id.adView);
         AdRequest adRequest = new AdRequest.Builder().build();
         mAdView.loadAd(adRequest);
+    }
 
+    private void bindLayout() {
         //ポジション紐付け
         position1 = findViewById(R.id.pitcher);
         position2 = findViewById(R.id.catcher);
@@ -52,35 +66,52 @@ public class FieldActivity extends AppCompatActivity {
         dh[3] = findViewById(R.id.dh4);
         dh[4] = findViewById(R.id.dh5);
         dh[5] = findViewById(R.id.dh6);
+    }
 
-        int playerNumber = 0;
+    private void hideDh() {
+        for (int i = 5; i >= maxDh; i--) {
+            dh[i].setVisibility(View.INVISIBLE);
+        }
+    }
+
+    private void setPlayerCount() {
         switch (CurrentOrderVersion.instance.getCurrentVersion()) {
             case FixedWords.DEFAULT:
                 playerNumber = 9;
                 break;
             case FixedWords.DH:
                 playerNumber = 10;
+                maxDh = 1;
                 break;
             case FixedWords.ALL10:
                 playerNumber = 10;
+                maxDh = 1;
                 break;
             case FixedWords.ALL11:
                 playerNumber = 11;
+                maxDh = 2;
                 break;
             case FixedWords.ALL12:
                 playerNumber = 12;
+                maxDh = 3;
                 break;
             case FixedWords.ALL13:
                 playerNumber = 13;
+                maxDh = 4;
                 break;
             case FixedWords.ALL14:
                 playerNumber = 14;
+                maxDh = 5;
                 break;
             case FixedWords.ALL15:
                 playerNumber = 15;
+                maxDh = 6;
                 break;
         }
+    }
 
+    private void setPlayers() {
+        int dhCount = 0;
         //ある打順の守備位置dataがどこかのポジションと合致すれば、その打順登録名を守備フィールドに
         for (int i = 0; i < playerNumber; i++) {
             switch (CachedPlayerPositionsInfo.instance.getAppropriatePosition(i)) {
@@ -111,16 +142,14 @@ public class FieldActivity extends AppCompatActivity {
                 case "(右)":
                     position9.setText(CachedPlayerNamesInfo.instance.getAppropriateName(i) + " (" + (i + 1) + ")");
                     break;
+                case "(DH)":
+                    if (dhCount >= maxDh) dhCount = 0;
+                    dh[dhCount].setText(CachedPlayerNamesInfo.instance.getAppropriateName(i) + " (" + (i + 1) + ")");
+                    dhCount++;
+                    break;
                 default:
                     break;
             }
         }
-
-
-    }
-
-    //戻るボタン
-    public void onClickBack(View view) {
-        finish();
     }
 }
