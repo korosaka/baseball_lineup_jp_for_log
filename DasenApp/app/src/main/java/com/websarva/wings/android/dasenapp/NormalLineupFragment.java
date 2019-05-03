@@ -71,12 +71,14 @@ public class NormalLineupFragment extends Fragment {
     private void setLayout() {
         for (int i = 0; i < 9; i++) {
             names[i].setText(CachedPlayerNamesInfo.instance.getNameNormal(i));
+            changeTextSize(names[i]);
             positions[i].setText(CachedPlayerPositionsInfo.instance.getPositionNormal(i));
         }
     }
 
     public void changeData(int num, String name, String position) {
         names[num].setText(name);
+        changeTextSize(names[num]);
         positions[num].setText(position);
     }
 
@@ -86,5 +88,11 @@ public class NormalLineupFragment extends Fragment {
 
     public void setButtonDefault(int num) {
         number_buttons[num].setTextColor(Color.parseColor("#000000"));
+    }
+
+    private void changeTextSize(TextView textView) {
+        int lengthOfText = textView.length();
+        if (lengthOfText > 5) textView.setTextSize(24);
+        else textView.setTextSize(28);
     }
 }
