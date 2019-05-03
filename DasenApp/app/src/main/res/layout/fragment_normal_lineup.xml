@@ -15,14 +15,14 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="5dp"
+            android:layout_marginTop="15dp"
             android:gravity="center_vertical"
             android:orientation="horizontal">
 
             <Button
                 android:id="@+id/btn1_normal"
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                android:layout_height="47dp"
                 android:background="@drawable/button_custom"
                 android:onClick="onClick1"
                 android:text="@string/first"
@@ -61,7 +61,7 @@
             <Button
                 android:id="@+id/btn2_normal"
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                android:layout_height="47dp"
                 android:background="@drawable/button_custom"
                 android:onClick="onClick2"
                 android:text="@string/second"
@@ -100,7 +100,7 @@
             <Button
                 android:id="@+id/btn3_normal"
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                android:layout_height="47dp"
                 android:background="@drawable/button_custom"
                 android:onClick="onClick3"
                 android:text="@string/third"
@@ -139,7 +139,7 @@
             <Button
                 android:id="@+id/btn4_normal"
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                android:layout_height="47dp"
                 android:background="@drawable/button_custom"
                 android:onClick="onClick4"
                 android:text="@string/fourth"
@@ -179,7 +179,7 @@
             <Button
                 android:id="@+id/btn5_normal"
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                android:layout_height="47dp"
                 android:background="@drawable/button_custom"
                 android:onClick="onClick5"
                 android:text="@string/fifth"
@@ -219,7 +219,7 @@
             <Button
                 android:id="@+id/btn6_normal"
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                android:layout_height="47dp"
                 android:background="@drawable/button_custom"
                 android:onClick="onClick6"
                 android:text="@string/sixth"
@@ -259,7 +259,7 @@
             <Button
                 android:id="@+id/btn7_normal"
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                android:layout_height="47dp"
                 android:background="@drawable/button_custom"
                 android:onClick="onClick7"
                 android:text="@string/seventh"
@@ -299,7 +299,7 @@
             <Button
                 android:id="@+id/btn8_normal"
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                android:layout_height="47dp"
                 android:background="@drawable/button_custom"
                 android:onClick="onClick8"
                 android:text="@string/eighth"
@@ -332,7 +332,7 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginBottom="10dp"
+            android:layout_marginBottom="15dp"
             android:gravity="center_vertical"
             android:orientation="horizontal">
 
@@ -340,7 +340,7 @@
             <Button
                 android:id="@+id/btn9_normal"
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                android:layout_height="47dp"
                 android:background="@drawable/button_custom"
                 android:onClick="onClick9"
                 android:text="@string/ninth"
