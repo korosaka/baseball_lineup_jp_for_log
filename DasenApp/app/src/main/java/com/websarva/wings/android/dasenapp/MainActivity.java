@@ -162,19 +162,16 @@ public class MainActivity extends AppCompatActivity {
         commonMethod(9);
     }
 
-
     //打順ボタン共通メソッド（打順・登録状態表示、EditText・登録/クリアボタンの有効化、データベース用の数字登録）
     public void commonMethod(int j) {
         // 入れ替え時のクリックと処理区別
         if (isReplacing) {
             replaceMethod(j);
-
         } else {
             // 通常時の打順選択
             selectNum(j);
         }
     }
-
 
     private void replaceMethod(int j) {
         // 入れ替え時
@@ -419,34 +416,18 @@ public class MainActivity extends AppCompatActivity {
     //オプションメニューを選択した時の処理
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        //選択されたオプションメニューのID取得
-        int itemId = item.getItemId();
-        FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
-        String[] spinnerResource = getResources().getStringArray(R.array.positions);
-
         //IDのR値による処理分岐
-        switch (itemId) {
-            //オーダー選択の場合
+        switch (item.getItemId()) {
             case R.id.oder:
-                transaction.hide(dhLineupFragment);
-                transaction.show(normalLineupFragment);
-                transaction.commit();
-                CurrentOrderVersion.instance.setCurrentVersion(FixedWords.DEFAULT);
+                showOrder(FixedWords.DEFAULT);
+                setSpinner(getResources().getStringArray(R.array.positions));
                 break;
             //DHの場合
             case R.id.dh:
-                transaction.hide(normalLineupFragment);
-                transaction.show(dhLineupFragment);
-                transaction.commit();
-                CurrentOrderVersion.instance.setCurrentVersion(FixedWords.DH);
-                spinnerResource = getResources().getStringArray(R.array.positions_dh);
+                showOrder(FixedWords.DH);
+                setSpinner(getResources().getStringArray(R.array.positions_dh));
                 break;
         }
-
-        ArrayAdapter<String> adapter = new ArrayAdapter<>(this, android.R.layout.simple_spinner_item, spinnerResource);
-        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-        spinner.setAdapter(adapter);
-
         setLayoutDefault();
         checkReplacing();
 
@@ -510,4 +491,26 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
+    private void showOrder(int orderVersion) {
+
+        CurrentOrderVersion.instance.setCurrentVersion(orderVersion);
+        FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
+        switch (orderVersion) {
+            case FixedWords.DEFAULT:
+                transaction.hide(dhLineupFragment);
+                transaction.show(normalLineupFragment);
+                break;
+            case FixedWords.DH:
+                transaction.hide(normalLineupFragment);
+                transaction.show(dhLineupFragment);
+                break;
+        }
+        transaction.commit();
+    }
+
+    private void setSpinner(String[] spinnerResource) {
+        ArrayAdapter<String> adapter = new ArrayAdapter<>(this, android.R.layout.simple_spinner_item, spinnerResource);
+        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        spinner.setAdapter(adapter);
+    }
 }

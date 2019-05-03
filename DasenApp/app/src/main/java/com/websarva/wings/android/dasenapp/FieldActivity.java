@@ -116,7 +116,10 @@ public class FieldActivity extends AppCompatActivity {
         for (int i = 0; i < playerNumber; i++) {
             switch (CachedPlayerPositionsInfo.instance.getAppropriatePosition(i)) {
                 case "(投)":
-                    position1.setText(CachedPlayerNamesInfo.instance.getAppropriateName(i) + " (" + (i + 1) + ")");
+                    if (CurrentOrderVersion.instance.getCurrentVersion() == FixedWords.DH)
+                        position1.setText(CachedPlayerNamesInfo.instance.getAppropriateName(i) + " (P)");
+                    else
+                        position1.setText(CachedPlayerNamesInfo.instance.getAppropriateName(i) + " (" + (i + 1) + ")");
                     break;
                 case "(捕)":
                     position2.setText(CachedPlayerNamesInfo.instance.getAppropriateName(i) + " (" + (i + 1) + ")");
