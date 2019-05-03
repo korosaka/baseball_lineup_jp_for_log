@@ -187,7 +187,8 @@ public class MainActivity extends AppCompatActivity {
                 // 異なるボタン →入れ替え処理
                 // DB/Layout内で入れ替え
                 replacing2players(firstClicked, j);
-                putSettingBack();
+                cancelReplacing();
+                setLayoutDefault();
             }
         }
     }
@@ -250,18 +251,6 @@ public class MainActivity extends AppCompatActivity {
                 break;
         }
 
-    }
-
-    private void putSettingBack() {
-        // 色々戻す
-
-        replace.setEnabled(false);
-        cancelFirstClick(firstClicked);
-        isReplacing = false;
-        replace.setEnabled(true);
-        cancel.setEnabled(false);
-        if (CurrentOrderVersion.instance.getCurrentVersion() == FixedWords.DH)
-            dhLineupFragment.setPitcherButtonEnable(true);
     }
 
     private void selectNum(int num) {
@@ -349,8 +338,6 @@ public class MainActivity extends AppCompatActivity {
         cancel.setEnabled(false);
         clear.setEnabled(false);
         replace.setEnabled(true);
-        if (CurrentOrderVersion.instance.getCurrentVersion() == FixedWords.DH)
-            dhLineupFragment.setPitcherButtonEnable(true);
     }
 
     //クリアボタン処理
@@ -365,15 +352,7 @@ public class MainActivity extends AppCompatActivity {
     public void onClickCancel(View view) {
 
         // 入れ替えボタンクリック時のキャンセルor入力中のキャンセル？
-
-        if (isReplacing) {
-            // ボタン色戻し
-            if (isFirstReplaceClicked) cancelFirstClick(firstClicked);
-            //入れ替えボタン戻し
-            replace.setEnabled(true);
-            //入れ替えフラグ戻し
-            isReplacing = false;
-        }
+        if (isReplacing) cancelReplacing();
         //それぞれ初期状態に戻す
         setLayoutDefault();
     }
@@ -398,7 +377,7 @@ public class MainActivity extends AppCompatActivity {
         startActivity(new Intent(MainActivity.this, FieldActivity.class));
 
         setLayoutDefault();
-        checkReplacing();
+        if (isReplacing) cancelReplacing();
     }
 
 
@@ -429,7 +408,7 @@ public class MainActivity extends AppCompatActivity {
                 break;
         }
         setLayoutDefault();
-        checkReplacing();
+        if (isReplacing) cancelReplacing();
 
         //親クラス同名メソッドで戻り値返却
         return super.onOptionsItemSelected(item);
@@ -438,11 +417,14 @@ public class MainActivity extends AppCompatActivity {
     /**
      * 入れ替え処理中ならリセット
      */
-    private void checkReplacing() {
-        if (isReplacing) {
-            if (isFirstReplaceClicked) cancelFirstClick(firstClicked);
-            isReplacing = false;
-        }
+    private void cancelReplacing() {
+        if (isFirstReplaceClicked) cancelFirstClick(firstClicked);
+        isReplacing = false;
+        title.setText(R.string.title);
+        replace.setEnabled(true);
+        cancel.setEnabled(false);
+        if (CurrentOrderVersion.instance.getCurrentVersion() == FixedWords.DH)
+            dhLineupFragment.setPitcherButtonEnable(true);
     }
 
     private void changeButtonColor(int num) {
