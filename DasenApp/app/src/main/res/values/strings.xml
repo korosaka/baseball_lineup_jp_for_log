@@ -63,4 +63,12 @@
     <string name="cancel">キャンセル</string>
     <string name="replace">入れ替え</string>
     <string name="replace_title">入れ替える２つの打順を選んでください</string>
+
+    <string name="all10">10人</string>
+    <string name="all11">11人</string>
+    <string name="all12">12人</string>
+    <string name="all13">13人</string>
+    <string name="all14">14人</string>
+    <string name="all15">15人</string>
+
 </resources>
